@@ -1,0 +1,227 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>ZendVn Training online group</title><meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <meta http-equiv="Refresh" content="3600" >
+        <meta name="keywords" content="Zend, Framework, training, course" >
+        <meta name="description" content="end Framework training course" >
+
+        <link href="css/menuTiny.css" media="screen" rel="stylesheet" type="text/css" >
+        <link href="css/rounded.css" media="screen" rel="stylesheet" type="text/css" >
+        <link href="css/general.css" media="screen" rel="stylesheet" type="text/css" >
+        <link href="css/icon.css" media="screen" rel="stylesheet" type="text/css" >
+        <link href="css/menu.css" media="screen" rel="stylesheet" type="text/css" >      
+        <link href="css/style.css" media="screen" rel="stylesheet" type="text/css" >
+        <link href="css/ui.all.css" media="screen" rel="stylesheet" type="text/css" > 
+
+        <script type="text/javascript" src="js/jquery-1.4min.js"></script>
+        <script type="text/javascript" src="js/menuTiny.js"></script>
+        <script type="text/javascript" src="js/submit.js"></script>
+    </head>
+    <body id="minwidth-body">
+        <div id="border-top" class="h_green">
+            <div>
+                <div>
+                    <span class="version">Version 1.0 Alpha</span>
+                    <span class="title" style="padding-left:20px">Seahog cms</span>
+                </div>
+            </div>
+        </div>
+        <div id="header-box">
+            <div id="module-status">
+                <span class="preview">
+                    <a target="_blank" href="#">Preview</a>
+                </span>
+                <a href="#">
+                    <span class="no-unread-messages">0</span>
+                </a>
+                <span class="loggedin-users">1</span>
+                <span class="logout">
+                    <a href="/zend2010/thoat.html">Logout</a>
+                </span>
+            </div>
+            <div id="module-menu">
+
+                <!-- BEGIN: Menu -->
+                <ul class="menuTiny" id="menuTiny">
+                    <li><a href="#" class="menuTinyLink">Main</a>
+                        <ul>
+                            <li><a href="#">Front End</a></li>
+                            <li><a href="#">Back End</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a href="#" class="menuTinyLink">Member</a>
+                        <ul>
+                            <li><a href="#">Group manager</a></li>
+                            <li><a href="#">User manager</a></li>
+                            <li><a href="#">Permission</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="menuTinyLink">Products</a>
+                        <ul>
+                            <li><a href="#">Category manager</a></li>
+                            <li><a href="#">Product manager</a></li>
+                            <li><a href="#">Bill</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <script type="text/javascript">
+                    var menu=new menu.dd("menu");
+                    menu.init("menuTiny","menuTinyHover");
+                </script><!-- END: Menu -->				
+
+
+
+
+            </div>
+            <div class="clr"></div>
+        </div>
+        <div id="content-box">
+            <div class="border">
+                <div class="padding">
+
+                    <form name="appForm" method="post" action="">
+
+
+
+                        <div id="toolbar-box">
+                            <div class="t"><div class="t"><div class="t"></div></div></div>
+                            <div class="m">
+                                <div id="toolbar" class="toolbar" >				
+                                  
+                                 
+                             <div class="toolbar-button" >
+                                   		 <a href="#">
+        								<img src="images/toolbar/icon-32-default.png">  
+                                        <br>Add new
+                                        </a>
+                                	</div>
+                                    <div class="toolbar-button" >
+                                   		 <a href="#">
+        								<img src="images/toolbar/icon-32-delete.png">  
+                                        <br>
+                                        Delete
+                                        </a>
+                                	</div>
+                                   
+                                  <div class="clr"></div>
+                                </div>
+                                <div class="header icon-48-install">Member :: Group manager</div>
+                                
+                                <div class="clr"></div>
+                            </div>
+                            <div class="b"><div class="b"><div class="b"></div></div></div>
+                        </div>
+                        <div class="clr"></div>
+                        <div id="submenu-box">
+                            <div style="border:1px solid #CCCCCC; padding:5px">
+                                <ul id="submenu">
+                                    <li>
+                                        <a href="#" class="active">Group manager</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Member manager</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Permission</a>
+                                    </li>
+                                </ul>
+                                <div class="clr"></div>
+                            </div>
+                        </div>	
+
+                        <!-- BEGIN: CONTENT -->
+                        <div id="element-box">
+                            <div class="t">
+                                <div class="t">
+                                    <div class="t"></div>
+                                </div>
+                            </div>
+                            <div class="m">
+                                <!-- BEGIN: ELEMENT BOX -->
+                                <div id="adminfieldset">
+                                    <div class="adminheader">Detail</div>
+                                    <div id="row">
+                                        <div class="label">Teacher:</div>
+                                        <select name="teacher_id" id="teacher_id" class="selectboxclass">
+                                            <option value="1" label="Pham Vu Khanh">Pham Vu Khanh</option>
+                                        </select>				</div><div class="clr"></div>
+                                    <div id="row">
+                                        <div class="label">Supporter:</div>
+                                        <select name="supporter_id" id="supporter_id" class="selectboxclass">
+                                            <option value="1" label="Nguyễn Việt Thắng">Nguyễn Việt Thắng</option>
+                                        </select>				</div><div class="clr"></div>
+                                    <div id="row">
+                                        <div class="label">Course:</div>
+                                        <select name="course_id" id="course_id" class="selectboxclass">
+                                            <option value="1" label="Khóa học Zend Framework">Khóa học Zend Framework</option>
+                                            <option value="2" label="Khóa học Joomla cơ bản">Khóa học Joomla cơ bản</option>
+                                        </select>				</div><div class="clr"></div>
+                                    <div id="row">
+                                        <div class="label">Outline category:</div>
+                                        <select name="outline_category_id" id="outline_category_id" class="selectboxclass">
+                                            <option value="1" label="Zend Framework v2.2">Zend Framework v2.2</option>
+                                            <option value="2" label="Zend Framework v2.3">Zend Framework v2.3</option>
+                                            <option value="3" label="Khóa học Joomla cơ bản v2">Khóa học Joomla cơ bản v2</option>
+                                        </select>				</div><div class="clr"></div>
+                                    <div id="row">
+                                        <div class="label">Code:</div>
+                                        <input type="text" name="code" id="code" value="" class="txtshort">				</div><div class="clr"></div>
+                                    <div id="row">
+                                        <div class="label">Name:</div>
+                                        <input type="text" name="name" id="name" value="" class="txtlong">				</div><div class="clr"></div>
+                                    <div id="row">
+                                        <div class="label">Start:</div>
+                                        <input type="text" name="start" id="start" value="" class="txtshort">				</div><div class="clr"></div>
+                                    <div id="row">
+                                        <div class="label">End:</div>
+                                        <input type="text" name="end" id="end" value="" class="txtshort">				</div><div class="clr"></div>
+                                    <div id="row">
+                                        <div class="label">Lock date:</div>
+                                        <input type="text" name="lock_date" id="lock_date" value="" class="txtshort">				</div><div class="clr"></div>
+                                    <div id="row">
+                                        <div class="label">Views:</div>
+                                        <input type="text" name="views" id="views" value="" class="txtshort">				</div><div class="clr"></div>
+                                    <div id="row">
+                                        <div class="label">Log directory:</div>
+                                        <input type="text" name="dir_log" id="dir_log" value="" class="txtlong">				</div><div class="clr"></div>
+                                    <div id="row">
+                                        <div class="label">Video directory:</div>
+                                        <input type="text" name="dir_video" id="dir_video" value="" class="txtlong">				</div><div class="clr"></div>
+                                    <div id="row">
+                                        <div class="label">Document directory:</div>
+                                        <input type="text" name="dir_document" id="dir_document" value="" class="txtlong">				</div><div class="clr"></div>
+                                    <div id="row">
+                                        <div class="label">Source directory:</div>
+                                        <input type="text" name="dir_source" id="dir_source" value="" class="txtlong">				</div><div class="clr"></div>
+                                    <div id="row">
+                                        <div class="label">Status:</div>
+                                        <label for="status-1"><input type="radio" name="status" id="status-1" value="1" class="radioclass">Active</label> <label for="status-0"><input type="radio" name="status" id="status-0" value="0" class="radioclass">Inactive</label>				</div><div class="clr"></div>
+                                </div>
+                                <!-- END: ELEMENT BOX -->	
+                                <div class="clr"></div>
+                            </div>
+                            <div class="b">
+                                <div class="b">
+                                    <div class="b"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: 	CONTENT -->
+                    </form>
+
+
+                    <div class="clr"></div>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+        <div id="border-bottom"><div><div></div></div></div>
+        <div id="footer">
+            <p class="copyright">
+			Copyright © 2010 www.zend.vn. All Rights Reserved.</p>
+        </div>
+    </body>
+</html>

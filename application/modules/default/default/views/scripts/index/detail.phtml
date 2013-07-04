@@ -1,0 +1,97 @@
+<?php
+    $arrCustomLink = $this->arrCustomLink;
+    $arrListCategory = $this->arrListCategory;
+    $arrInfoCat = $this->arrInfoCat;
+    $totalLink = 0;
+    foreach($arrCustomLink as $k => $i)
+    {
+        $totalLink += count($i);
+    }
+    /*echo "<pre>";
+    var_dump($arrCustomLink);
+    echo "</pre>";*/
+?>
+<div id="category">
+    <div class="wrapper">
+        <div id="cat-content">
+            <div id="cat-left">
+                <div id="category-detail">
+                    <div class="nav_link">
+                        <h2><a href="<?php echo DOMAIN_NAME; ?>" title="">TRANG CHỦ</a> / <?php echo $arrInfoCat['name']; ?> / <font class="f12">Có <strong><?php echo $totalLink; ?></strong> trang web thuộc danh mục này</font></h2>
+                    </div>
+                    <div class="category-detail">
+                        <?php
+                            $strListLink = '';
+                            foreach($arrListCategory as $cKey => $cItems)
+                            {
+                                $strListLink .= '<h2><a>'.$cItems['name'].'</a></h2>';
+                                $listLink = $arrCustomLink[$cItems['id']];
+                                $strListLink .= '<ul>';
+                                $i = 1 ;
+                                $j = 1;
+                                foreach($listLink as $key => $items)
+                                {
+                                    
+                                    if($i!=3)
+                                    {
+                                        $strLast = '';
+                                        $i++;
+                                    }
+                                    else
+                                    {
+                                        $strLast = 'class="last"';
+                                        $i = 1;
+                                    }
+                                    if($j<=11)
+                                    {
+                                        $strHidden ='';
+                                        $j++;
+                                    }
+                                    else
+                                    {
+                                        if($strLast)
+                                        {
+                                            $strLast = 'class="last hidden"';
+                                        }
+                                        else
+                                        {
+                                            $strHidden = 'class="hidden"';
+                                        }
+                                        
+                                        $j++;
+                                    }
+                                    $urlLogo = DOMAIN_NAME.'public/files/weblink/logo/'.$items['full_image'];
+                                    $strListLink .= '<a onclick="log(this,1,100,102)" target="_blank" href="'.$items['link'].'" title="'.$items['summary'].'">
+                                                        <li '.$strLast.'. '.$strHidden.'>
+                                                            <div class="ico_web">
+                                                                <img width="48" height="48" src="'.$urlLogo.'" alt="" title="VnExpress" class="favi48">
+                                                            </div>
+                                                            <div class="info_web">
+                                                                <h3>'.$items['title'].'</h3>
+                                                                <p>'.$items['summary'].'</p>
+                                                            </div>
+                                                        </li>
+                                                    </a>';
+                                }
+                                //echo $j;
+                                if($j>11)
+                                {
+                                    $strListLink .= '<li class="more">
+                                                    <h2><a href="" title="">XEM THÊM</a></h2>
+                                                </li>';
+                                }
+                                $strListLink .= '</ul>
+                                                <div class="clr"></div>';  
+                            }
+                            echo $strListLink;
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <div id="cat-right">
+                <?php $this->ShowMenuRight($this);?>
+                <?php $this->ShowCopyRight($this);?>
+            </div>
+        </div>
+    </div>
+</div>

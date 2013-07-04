@@ -1,0 +1,281 @@
+<?php 
+	$ssFilter = $this->arrParam['ssFilter'];
+	$action_link 	= $this->baseUrl($this->currentController . '/filter/type/order');
+	$lblTitle 	= $this->cmsLinkSort('Title','n.title',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);
+	
+	$lblStatus		= $this->cmsLinkSort('Status','n.status',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);											
+	$lblOrder		= $this->cmsLinkSort('Order','n.order',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);
+	$lblCreated= $this->cmsLinkSort('Created','n.created',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);
+										
+	$lblCat 		= $this->cmsLinkSort('Category','cat_name',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);																	
+
+	$lblID 		= $this->cmsLinkSort('ID','n.id',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);
+
+	//-------------------CREATE CATEGORY SELECTBOX ------------------------
+	$linkSlbCategory = $this->baseUrl($this->currentController . '/filter/type/category');
+	$options = $this->listCat;
+	
+	$slbCategory = $this->cmsCategorySelect('cat_id',$ssFilter['cat_id'],$options,array('onchange'=>"OnSubmitForm('" . $linkSlbCategory . "')"));
+	$selectCategory = ' - Category: ' . $slbCategory;
+	
+    $linkSlbAlbum = $this->baseUrl($this->currentController . '/filter/type/album');
+    $options = $this->listAlbum;
+     
+	$slbAlbum = $this->cmsCategorySelect('album_id',$ssFilter['album_id'],$options,array('onchange'=>"OnSubmitForm('" . $linkSlbAlbum . "')"));
+	$selectAlbum = ' - Album: ' . $slbAlbum;    
+    
+	//-------------------CREATE DATE FILTER ------------------------
+	$dateFrom	= '  -  Date from: '.$this->cmsDatepicker('date_from',$ssFilter['date_from'],array('class'=>'txtshort'), $this,'birthday');
+	$dateTo		= ' - Date to: '.$this->cmsDatepicker('date_to',$ssFilter['date_to'],array('class'=>'txtshort'), $this,'birthday');
+	$linkSearch = $this->baseUrl($this->currentController . '/filter/type/date/key/1');
+	$btnSearch = $this->formButton('search-now','Filter by date',
+									array('onclick'=>"OnSubmitForm('" . $linkSearch . "')"));
+	$linkResetSearch = $this->baseUrl($this->currentController . '/filter/type/date/key/0');							
+	$btnResetSearch = $this->formButton('clear-keywords','Show all',
+									array('onclick'=>"OnSubmitForm('" . $linkResetSearch . "')"));
+	$strDateSearch = $dateFrom . ' ' . $dateTo . ' ' . $btnSearch . ' ' . $btnResetSearch;	
+	
+	//CREATE SEARCH AREA
+	$keywords = $this->formText('keywords',$ssFilter['keywords'],array('class'=>'txtshort'));
+	$linkSearch = $this->baseUrl($this->currentController . '/filter/type/search/key/1');
+	$btnSearch = $this->formButton('search-now','Search now',
+									array('onclick'=>"OnSubmitForm('" . $linkSearch . "')"));
+	$linkResetSearch = $this->baseUrl($this->currentController . '/filter/type/search/key/0');							
+	$btnResetSearch = $this->formButton('clear-keywords','Clear',
+									array('onclick'=>"OnSubmitForm('" . $linkResetSearch . "')"));	
+	 $strSearch = $keywords . ' ' . $btnSearch . ' ' . $btnResetSearch;	
+	 $this->view->errors;															
+?>
+<form name="appForm" method="post" action="">
+
+
+
+                        <?php echo $this->render('admin-weblink/toolbar/index.php')?>
+                        <div class="clr"></div>
+                         <?php echo $this->render('admin-weblink/sublink/index.php')?>
+
+                        <!-- BEGIN: CONTENT -->
+                        <div id="element-box">
+                        	
+                        	 	 <!-- multi upload -->
+                        	 	 <div class="t">
+                                <div class="t">
+                                    <div class="t"></div>
+                                </div>
+                            </div>
+                        	 	<div class="m">
+									<script type="text/javascript">
+									$(document).ready(function() {
+										var cat_id_= $('#cat_id option:selected').val();
+                                        var album_id_= $('#album_id option:selected').val();
+										//alert(cat_id_);
+									  $('#file_upload').uploadify({
+									    'uploader'  : '<?php echo $this->baseUrl(TEMPLATE_URL . "/admin/system/media/uploadify.swf");?>',
+									    'script'    : '<?php echo $this->baseUrl($this->currentController . '/uploadify'); ?>',
+									    'cancelImg' : '<?php echo $this->baseUrl(TEMPLATE_URL . "/admin/system/images/cancel.png"); ?>',
+									    'folder'  : '<?php echo $this->baseUrl("public/files/images/full_images/"); ?>',									   
+								        'multi'     : true,          
+								        'auto'      : true,
+								        'scriptData'  : {'cat_id':cat_id_,'album_id':album_id_},
+								        'fileDataName' : 'full_image',
+                                        'onSelect':function(){                                
+                                            if(!parseInt($('select[name="cat_id"]').val()))
+                                            {
+                                                alert('Vui Lòng chọn Category !');
+                                                exit();
+                                            }                                                 
+                                             else if(!parseInt($('select[name=album_id]').val()))
+                                             {
+                                                alert('Vui Lòng chọn Album !');
+                                                exit();
+                                             }                                                                                                                                                                                                                                                                                                       
+                                        },                                        
+								        'onComplete'  : function(event, ID, fileObj, response, data) {								            
+								            $('#result').html('con '+data.fileCount+' file');								             
+								                  
+								         },								      
+								        'onAllComplete' : function(event,data) 
+                                        {								       
+								        	 document.location=document.location;						        
+						                },
+						                onError: function (a, b, c, d) {
+						                    if (d.status == 404)
+						                           console.log('Could not find upload script. Use a path relative to: '+'<?= getcwd() ?>');
+						                    else if (d.type === "HTTP")
+						                    	console.log('error '+d.type+": "+d.status);
+						                    else if (d.type ==="File Size")
+						                    	console.log(c.name+' '+d.type+' Limit: '+Math.round(d.sizeLimit/1024)+'KB');
+						                    else
+						                    	console.log('error '+d.type+": "+d.text);
+						               }
+									  });
+									});
+									</script>
+										
+										<fieldset>
+											<legend>Click here to upload images:</legend>
+                        	 	 		<div id="result"></div>
+      									<input id="file_upload" name="file_upload" type="file" />
+      									
+      									</fieldset>      								
+      								</div>
+      								
+      								<div class="b">
+                                		<div class="b">
+                                    		<div class="b"></div>
+                                		</div>
+                            		</div><br />
+      								
+                        	 	<!-- multi upload end-->
+                        	 
+                            <div class="t">
+                                <div class="t">
+                                    <div class="t"></div>
+                                </div>
+                            </div>
+                            <div class="m">
+                                <!-- BEGIN: ELEMENT BOX -->
+								<div id="filters">
+									<div style="float:left;">
+										<?php echo $strSearch . $strDateSearch;?>
+									</div>
+                                    									
+									<div  style="float:right;margin-left:10px;">
+										<?php echo $selectAlbum;?>
+									</div>
+                                    <div  style="float:right;">
+										<?php echo $selectCategory;?>
+									</div>
+									<div class="clr"></div>
+								</div>	
+
+                                <!-- Area 4: In du lieu lay tu database -->
+                                <table class="adminlist">
+                                    <thead>
+                                        <tr>
+                                            <th><div style="float: left;"><input type="checkbox" name="checkbox" id="checkbox" onclick="checkedAll()">Check all</div>Image</th>
+                                        </tr>
+                                    </thead>
+                                    <tr class="even">
+                                    	<td align="left">
+                                    	<!-- gallery -->
+                                    	<div class="gallery">
+											<ul class="images">
+                                    	
+									<?php 
+										foreach($this->Items as $key => $val){
+											$id 			= $val['id'];
+											$title			= $val['title'];
+											$thumb_image_200x200	= PUBLIC_URL.'/files/gallery/thumb_images_293x145/'.$val['full_image'];
+											$thumb_image_500x500	= PUBLIC_URL.'/files/gallery/thumb_images_500x500/'.$val['full_image'];
+											$created 		= $val['created'];
+											$cat_name 		= $val['cat_name'];
+											
+											$status 		= $val['status'];
+											if($status == 1){	
+												$linkStatus = $this->baseUrl($this->currentController . '/status/type/0/id/' . $id . '/page/' . $this->arrParam['page']);											
+												$status = $this->cmsIconButton('Active', $this->imgUrl . '/icon/active.png',$linkStatus);
+											}else{
+												$linkStatus = $this->baseUrl($this->currentController . '/status/type/1/id/' . $id . '/page/' . $this->arrParam['page']);
+												$status = $this->cmsIconButton('INactive', $this->imgUrl . '/icon/inactive.png',$linkStatus);
+											}											
+											
+											
+											
+											$order 			= $this->formText('order[' . $val['id'] . ']' ,$val['order'],array('style'=>'width: 30px; text-align: center;'));
+											
+											//$linkComment	= $this->baseUrl($this->currentController . '-comment/index/item_id/' . $id);											
+										//	$btnComment		= $this->cmsIconButton('View Comments',$this->imgUrl . '/comments.gif',$linkComment);
+											
+											$linkEdit		= $this->baseUrl($this->currentController . '/edit/id/' . $id);											
+											$btnEdit		= $this->cmsIconButton('Edit Item',$this->imgUrl . '/icon_edit.png',$linkEdit);
+											
+											$linkDelete		= $this->baseUrl($this->currentController . '/delete/id/' . $id);
+											$btnDelete		= $this->cmsIconButton('Delete Item',$this->imgUrl . '/icon_del.png',$linkDelete);
+										
+											$strIconButton	= $btnComment . ' ' . $btnEdit . ' ' . $btnDelete;
+											
+											$cid			= $this->formCheckbox('cid[]',$val['id']);
+											
+											$titleedit		=	'<a href="'.$linkEdit.'">'.$title.'</a>';
+									?>
+                                    	
+                                    		
+                                    		<li class="image" style="float: left; list-style:none;">
+                                    			<div style="float: left;width: 210px;height: 250px; text-align:center; margin: 5px;border: solid 1px #CCC;">
+													<div style="float: left;"><?php echo $cid.$status.$titleedit;?></div>
+													<div style="width: 100%;clear: both;"></div>
+													<div style="width: 100%;height: 200px;vertical-align: middle;margin-top: 5px;margin-bottom: 5px;">
+													<a rel="lightbox-mygallery" href="<?php echo $thumb_image_500x500;?>" title="<?php echo $title;?>">
+														
+														<img src="<?php echo $thumb_image_200x200;?>" <?php if($val['status']==0)echo 'style="filter:alpha(opacity=20);opacity: 0.2;"';?>>
+														
+													</a>
+													</div>
+												<div><?php echo $strIconButton;?></div>
+												</div>
+											</li>
+											
+                                    	
+                                    <?php 
+										}
+										
+                                    ?>
+                                    		</ul>
+									</div>
+                                    
+                                    <!-- gallery end -->
+                                    	</td>
+                                    </tr>
+                                    <!-- BEGIN: PAGINATION (FOOT) -->
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="9">
+                                                <div class="container">
+                                                    <div class="pagination">
+                                                        <?php 
+                                                        	$currentUrl = $this->baseUrl($this->currentController . '/index');
+                                                        	echo $this->paginationControl($this->panigator,'Sliding','pagination.phtml',array('currentUrl'=>$currentUrl));
+                                                        	
+                                                        	// display items per page
+                                                        	$linkSlbPagging = $this->baseUrl($this->currentController . '/filter/type/pagging');
+                                                        	$options = array(5=>'5',
+                                                        					10=>'10',
+                                                        					20=>'20',
+                                                        					30=>'30',
+                                                        					50=>'50',
+                                                        					100=>'100',
+                                                        					200=>'200');
+                                                        	if($ssFilter['pagging']=='')
+                                                        		$ssFilter['pagging']=20;
+															$numPerPage = $this->formSelect('pagging',$ssFilter['pagging'],
+																							array('onchange'=>"OnSubmitForm('" . $linkSlbPagging . "')"),
+																							$options);
+															echo 'Items per page:'.$numPerPage;
+                                                        ?>
+                                                        <div class="limit"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>					
+                                    </tfoot>				<!-- END: PAGINATION (FOOT) -->
+                                </table>
+                                <!-- Area 4: In du lieu lay tu database - End -->
+
+                                <!-- END: ELEMENT BOX -->	
+                              <div class="clr"></div>
+                            </div>
+                            <div class="b">
+                                <div class="b">
+                                    <div class="b"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: 	CONTENT -->
+                    </form>

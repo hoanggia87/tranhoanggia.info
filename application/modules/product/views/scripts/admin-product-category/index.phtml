@@ -1,0 +1,300 @@
+<div class="mainwrapper">
+    
+    <!-- START OF LEFT PANEL -->
+    <div class="leftpanel">
+        <?php $this->adminMenu($this);?>
+    </div><!--mainleft-->
+    <!-- END OF LEFT PANEL -->
+    
+    <!-- START OF RIGHT PANEL -->
+    <div class="rightpanel">
+        <?php $this->adminHeaderpanel($this);?>
+        <?php $this->adminBreadcrumbwidget($this);?>
+
+
+        <div class="pagetitle">                              
+            <h1>Dashboard</h1> <span>This is a sample description for dashboard page...</span>            
+            
+        </div><!--pagetitle-->
+        
+        
+        
+
+        <div class="maincontent">
+            <div class="contentinner">
+                
+                <div class="mediamgr_head">
+                    <ul class="mediamgr_menu">
+                        
+                        <li class="newfilebtn"><div class='buttonfeature'><a href="javascript:void(0);"  class="btn btn-info addForm"><i class="iconsweets-create"></i> Thêm mới</a></div></li>
+                        <li class="marginleft15 filesearch">
+                            <form>
+                                <input type="text" id="keyword" class="filekeyword" placeholder="Search here" />
+                            </form>
+                        </li>
+                    </ul>
+                    <span class="clearall"></span>
+                </div><!--mediamgr_head-->
+
+
+
+                <!--form add-->
+                 <?php
+                    //list Category select
+                    $option = $this->ItemsSelect;
+                    $listCat = $this->cmsCategorySelect('parents',0,$option,array('class'=>'uniformselect'));
+                ?>
+              
+                <form class="stdform" method="post" id="add-form">
+                    <p>
+                        <label>Tên danh mục</label>
+                        <span class="field"><input type="text" name="name" id="name" class="input-large" placeholder="Tên danh mục" /></span>
+                    </p>
+                    
+                    <p>
+                        <label>Danh mục cha</label>
+                        <span class="field" id="ajax-content-category-select"></span>
+                    </p>
+                                            
+                    <p>
+                        <label</label>
+                        <span class="field">
+                            <button type="submit" class="btn btn-primary">Add Item</button>
+                            <a class="btn closeForm" href="#">Close</a>                           
+                        </span>
+                        
+                    </p>
+                </form>
+                <!--form add end-->
+                        
+                        
+            <div id="ajax-content-category" class="widgetcontent"></div><!--ajax content-->
+                
+            </div>
+        </div>
+
+        
+    </div><!--mainright-->
+    <!-- END OF RIGHT PANEL -->
+    
+    <div class="clearfix"></div>
+    <?php $this->adminFooterpanel($this);?>
+    
+
+    
+</div><!--mainwrapper-->
+
+
+
+<script>
+    function iniListControl()
+    {
+        jQuery(".listCategory tr").each(function(){
+            var objThis=this;
+            if(jQuery(this).attr('order')==1)
+            {
+                jQuery(this).find(".icon-arrow-up").parents('a:eq(0)').css({'opacity':0,'cursor':'default'}).click(function(event){});
+            }
+            
+            if(jQuery(this).next().attr('pid')!=jQuery(this).attr('pid'))
+            {
+                if(jQuery(this).next().attr('level')>jQuery(this).attr('level'))
+                {   
+                    //kiểm tra từ vị trí này trở đi nếu không còn category cùng parent thì ẩn luôn mũi tên
+                    var index=jQuery(this).index();
+                    var flagS=0;//gán mặc định là ko còn 
+                    jQuery(".listCategory tr:gt("+index+")").each(function(){
+                        if(jQuery(this).attr('pid')==jQuery(objThis).attr('pid'))
+                        {
+                            flagS=1;
+                            return;
+                        }
+                    });
+
+                    if(flagS==0)//ko còn hy vọng :( thì ẩn luôn button đó
+                    {
+                        jQuery(this).find(".icon-arrow-down").parents('a:eq(0)').css({'opacity':0,'cursor':'default'});
+                    }
+                }
+                else
+                {
+                    jQuery(this).find(".icon-arrow-down").parents('a:eq(0)').css({'opacity':0,'cursor':'default'});       
+                }
+                
+            }
+        });
+
+
+
+        jQuery('.feature.feature_hide,.feature.feature_show').unbind('click').click(function(event){
+            event.preventDefault();
+
+            jQuery(this).unbind('click');
+            jQuery.ajax({
+                url: jQuery(this).attr('href'),
+                success: function(jsonRespon) {
+                    getList();
+                }
+            });    
+           
+            
+        });
+        jQuery('.feature.feature_up,.feature.feature_down').unbind('click').click(function(event){
+            event.preventDefault();
+
+            if(jQuery(this).css('opacity')==0)
+            {
+                //do not thing
+            }
+            else
+            {
+                var arrValue=new Array();
+                jQuery(".listCategory tr").each(function(){
+
+                });
+
+                jQuery(this).unbind('click');
+                jQuery.ajax({
+                    url: jQuery(this).attr('href'),
+                    success: function(jsonRespon) {
+                        getList();
+                        getListSelect();
+                    }
+                });    
+            }
+            
+        });
+        jQuery('.feature.feature_delete').unbind('click').click(function(event){
+            event.preventDefault();
+            var objThis=this;
+            // confirm box
+            
+            jConfirm('Bạn có chắc chắn muốn xóa không', 'Xác nhận', function(r) {
+                if(r==true)
+                {
+                    jQuery(objThis).unbind('click');
+                    jQuery.ajax({
+                        url: jQuery(objThis).attr('href'),
+                        success: function(jsonRespon) {
+                            getList();
+                        }
+                    });    
+                
+                }
+                else
+                {
+                    jConfirm.hide();
+                }                    
+            });
+        
+            
+            
+            
+        });
+
+        jQuery('.feature.feature_edit').unbind('click').click(function(event){
+            //event.preventDefault();
+            
+            //window.location.href=jQuery(this).attr('href');
+        });
+
+    }
+
+    function getList()
+    {
+        jQuery.ajax({
+            url: "<?php echo $this->baseUrl('product/admin-product-category/get-list');?>",
+            data: jQuery('#add-form').serialize(),
+            async:true,
+            beforeSend: function () {
+                jQuery("#ajax-content-category").css({'opacity':'1'});
+            },
+            success: function(jsonRespon) {
+
+                jQuery("#ajax-content-category").html(jsonRespon).css({'opacity':'1'});
+
+                iniListControl();
+                 
+            }
+        });
+    }
+
+    function getListSelect()
+    {
+        jQuery.ajax({
+            url: "<?php echo $this->baseUrl('product/admin-product-category/get-list-select');?>",
+            data: jQuery('#add-form').serialize(),
+            async:true,
+            beforeSend: function () {
+                jQuery("#ajax-content-category-select select").addClass('disabled');//.css({'opacity':'0.5'});
+            },
+            success: function(jsonRespon) {
+
+                jQuery("#ajax-content-category-select").html(jsonRespon).css({'opacity':'1'});
+                 
+            }
+        });
+    }
+
+    jQuery('#add-form').submit(function(event){
+        event.preventDefault();
+        
+        var objThis=this;
+        jQuery(objThis).find(".btn.btn-primary[type='submit']").addClass('disabled').attr('type','button');
+
+        jQuery.ajax({
+                url: "<?php echo $this->baseUrl('product/admin-product-category/add');?>",
+                data: jQuery('#add-form').serialize(),
+                async:true,
+                beforeSend: function () {
+                    jQuery(".contentinner .alert").remove();
+                },
+                success: function(jsonRespon) {
+                    
+                    jQuery(objThis).find(".btn.btn-primary[type='button']").removeClass('disabled').attr('type','submit');
+
+                    var arrParam=jQuery.parseJSON(jsonRespon);
+                    //ẩn form nhập
+                    //jQuery('#add-form').fadeOut('slow'); 
+                    if(arrParam['error'].length!=0)
+                    {
+                         jQuery(".contentinner").prepend('<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button">×</button>Có gì đó không đúng, Xin hãy kiểm tra lại dữ liệu nhập</div>');
+                        
+                    }
+                    else
+                    {
+                        //clear form
+                        jQuery("#add-form #name").val('');
+                        //append thong bao
+                        jQuery(".contentinner").prepend('<div class="alert alert-info" style="display:none;"><button class="close" data-dismiss="alert" type="button">×</button>Bạn đã thêm thành công một danh mục mới</div>');
+                        jQuery(".contentinner").find(".alert.alert-info").fadeIn();
+                        //lay du lieu thanh cong thi load lai list
+                        getList();
+                        getListSelect();
+                        setTimeout(function() {
+                            jQuery(".contentinner").find(".alert.alert-info").fadeOut().remove();
+                        }, 3000);
+                    }
+                    
+
+                     
+                }
+            });
+
+    });
+
+    
+
+
+    jQuery(document).ready(function(){
+        getList();
+        getListSelect();
+
+        jQuery("#keyword").onKeyup(function(){
+            
+        });
+    });
+</script>
+
+
+

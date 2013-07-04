@@ -1,0 +1,103 @@
+<?php //$this->ShowHotlink($this);?>
+<?php
+    $urlLogo = DOMAIN_NAME.'public/files/weblink/logo/';
+    $arrListHotSite = $this->arrListHotSite;
+    $classLast = 'class="last"';
+    $strListHotSite = '<div id="hot-site">
+                            <div class="wrapper">
+                                <div class="hotsite_b">
+                                    <div class="hotsite_wrap">
+                                        <div class="hotsite">
+                                            <ul>';
+    if($arrListHotSite)
+    {
+        foreach($arrListHotSite as $key => $iTems)
+        {
+            $strListHotSite .=                  '<li>
+                                                    <a target="_blank" onclick="log(this,1,3,105)" href="'.$iTems['link'].'" title="'.$iTems['summary'].'">
+                                                        <img width="48" height="48" src="'.$urlLogo.$iTems['full_image'].'" class="favi48 margin_favi" />
+                                                        <span>'.$iTems['title'].'</span>
+                                                    </a>
+                                                </li>';
+        }
+    }
+    $strListHotSite .=              '      </ul>
+                                        </div>
+                                    </div>
+                                    <div class="hotsite-custom">
+                    		            <div class="hotsite-custom_bar bar_open" id="custom_bar">
+                    		            	<a href="javascript:void(0)" hidefocus="true" tabindex="-1" onclick="return false;"></a>		            	
+                    		            </div>		       		
+                    		            <div class="hotsite-custom_list cf" id="custom_list" style="display: block;">
+                                            <a class="custom_item" href="http://google.com.vn" target="_blank" tabindex="-1"><span class="ico-txt"><img class="site-icon" src="http://google.com.vn/favicon.ico" onerror="this.src=\'/static/web/tw/img/defautlico.png\';this.onerror=null;">google</span><i class="btn modify sprite-modify_normal"></i><i class="btn del sprite-del_normal"></i></a>
+                                            <a class="custom_item" href="http://google.com.vn" target="_blank" tabindex="-1"><span class="ico-txt"><img class="site-icon" src="http://google.com.vn/favicon.ico" onerror="this.src=\'/static/web/tw/img/defautlico.png\';this.onerror=null;">google</span><i class="btn modify sprite-modify_normal"></i><i class="btn del sprite-del_normal"></i></a>
+                                            <a class="custom_item" href="http://google.com.vn" target="_blank" tabindex="-1"><span class="ico-txt"><img class="site-icon" src="http://google.com.vn/favicon.ico" onerror="this.src=\'/static/web/tw/img/defautlico.png\';this.onerror=null;">google</span><i class="btn modify sprite-modify_normal"></i><i class="btn del sprite-del_normal"></i></a>
+                                            <a class="custom_item" href="http://google.com.vn" target="_blank" tabindex="-1"><span class="ico-txt"><img class="site-icon" src="http://google.com.vn/favicon.ico" onerror="this.src=\'/static/web/tw/img/defautlico.png\';this.onerror=null;">google</span><i class="btn modify sprite-modify_normal"></i><i class="btn del sprite-del_normal"></i></a>
+                                            <a class="custom_item" href="http://google.com.vn" target="_blank" tabindex="-1"><span class="ico-txt"><img class="site-icon" src="http://google.com.vn/favicon.ico" onerror="this.src=\'/static/web/tw/img/defautlico.png\';this.onerror=null;">google</span><i class="btn modify sprite-modify_normal"></i><i class="btn del sprite-del_normal"></i></a>
+                                            <a class="custom_item" href="http://google.com.vn" target="_blank" tabindex="-1"><span class="ico-txt"><img class="site-icon" src="http://google.com.vn/favicon.ico" onerror="this.src=\'/static/web/tw/img/defautlico.png\';this.onerror=null;">google</span><i class="btn modify sprite-modify_normal"></i><i class="btn del sprite-del_normal"></i></a>
+                                            
+                    		                <span class="custom_item add-btn" id="add-btn" style="display: inline;">
+                    		                 	<i class="add-btn-ico"></i>
+                    		                 	<span class="add-btn-txt">Click để thêm website</span>                   
+                    		                </span>
+                    		                <form action="" id="customsite-con" class="box-prompt" style="display: none;">
+                    	                    	<div class="box-prompt-inner">
+                    		                    	<label for="website-address">Địa chỉ website</label>
+                    		                        <input type="text" id="website-address" class="ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true">
+                    		                        <label for="website-name">Tên website</label>
+                    		                        <input type="text" id="website-name">
+                    		                        <div class="btn-con">
+                    		                            <span class="mod-btn_normal ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="del-btn-ok" role="button" aria-disabled="false"><span class="ui-button-text">Xác nhận</span></span>
+                    		                            <span class="mod-btn_cancel ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" id="del-btn-cancel" role="button" aria-disabled="false"><span class="ui-button-text">Thoát</span></span>
+                    		                        </div>
+                    	                    	</div>
+                    	                    </form>
+                    		            </div>
+                    		        </div>
+                                </div>
+                            </div>
+                        </div>';
+    echo $strListHotSite;
+?>
+<div id="category">
+    <div class="wrapper">
+        <div id="cat-content">
+            <div id="cat-left">
+                <?php
+                    $arrInfoCat = $this->arrInfoCat;
+                    $arrNameCat = $this->arrNameCat;
+                    $strHomeCat = '';
+                    if($arrInfoCat)
+                    {
+                        foreach($arrInfoCat as $ckey => $cITems)
+                        {
+                            $strListLink = '';
+                            if($cITems)
+                            {
+                                ksort($cITems);
+                                foreach($cITems as $k => $i)
+                                {
+                                    $strListLink .= '<dd><a href="'.$i['link'].'" target="_blank">'.$i['title'].'</a></dd>';
+                                }
+                            }
+                            $reWriteLink = new Zendvn_View_Helper_CmsRewriteLink();
+                            $urlCat = $this->baseUrl('chuyen-muc/'.$reWriteLink->noSign($arrNameCat[$ckey]).'-'.$ckey.'.html');
+                            //echo $reWriteLink->noSign($arrNameCat[$ckey]);
+                            $strHomeCat .= '<div class="grid">
+                                	    		<dl class="s-mrm s-mtm s-pbs sortsite">
+                                		    		<dt class="s-mbs"><a href="'.$urlCat.'"><i class="arrow_r"></i>'.$arrNameCat[$ckey].'</a></dt>'.		    		
+                                		    		$strListLink.'			    			
+                                		    	</dl>
+                                	    	</div>';
+                        }
+                    }
+                    echo $strHomeCat;
+                ?>
+            </div>
+            <div id="cat-right">
+                <?php $this->ShowMenuRight($this);?>
+                <?php $this->ShowCopyRight($this);?>
+            </div>
+        </div>
+    </div>
+</div>

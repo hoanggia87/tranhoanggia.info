@@ -1,0 +1,50 @@
+ul.menuTiny {list-style:none; margin:0; padding:0}
+ul.menuTiny * {margin:0; padding:0}
+ul.menuTiny a {
+	display:block;
+	color:#333333;
+	cursor:default;
+	font-size:11px;
+	font-weight:bold;
+	line-height:1.6em;
+	margin:0 1px;
+	padding:0.35em 1em;
+	text-decoration:none;
+	vertical-align:middle; 
+	
+}
+ul.menuTiny li {
+	position:relative; 
+	float:left; 	
+	border-left:1px solid #FFFFFF;
+	border-right:1px solid #D8D8D8;
+}
+ul.menuTiny ul {
+	position:absolute; top:26px; left:0; background:#d1d1d1; display:none; opacity:0; list-style:none
+}
+ul.menuTiny ul li {
+	position:relative; border:1px solid #aaa; border-top:none; width:150px; margin:0;
+}
+ul.menuTiny ul li a {
+	display:block; padding:3px 7px 5px; background-color:#f0f0f0
+}
+ul.menuTiny ul li a:hover {
+	background-color:#c5c5c5
+}
+ul.menuTiny ul ul {
+	left:150px; top:-1px
+}
+
+
+ul.menuTiny .menuTinyLink {
+	font-weight:bold; backgro/und:url(images/header.gif);
+}
+ul.menuTiny .menuTinyLink:hover, ul.menuTiny .menuTinyHover {
+	background:url(images/header_over.gif)
+}
+ul.menuTiny .sub {
+	background:#f0f0f0 url(../images/arrow.gif) 142px 8px no-repeat
+}
+ul.menuTiny .topline {
+	border-top:1px solid #aaa
+}

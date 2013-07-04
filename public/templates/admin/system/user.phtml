@@ -1,0 +1,228 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd"><html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>ZendVn Training online group</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" >
+        <meta http-equiv="Refresh" content="3600" >
+        <meta name="keywords" content="Zend, Framework, training, course" >
+        <meta name="description" content="Zend Framework training course" >
+
+        <link href="css/menuTiny.css" media="screen" rel="stylesheet" type="text/css" >
+        <link href="css/rounded.css" media="screen" rel="stylesheet" type="text/css" >
+        <link href="css/general.css" media="screen" rel="stylesheet" type="text/css" >
+        <link href="css/icon.css" media="screen" rel="stylesheet" type="text/css" >
+        <link href="css/menu.css" media="screen" rel="stylesheet" type="text/css" >      
+        <link href="css/style.css" media="screen" rel="stylesheet" type="text/css" >
+        <link href="css/ui.all.css" media="screen" rel="stylesheet" type="text/css" > 
+
+        <script type="text/javascript" src="js/jquery-1.4min.js"></script>
+        <script type="text/javascript" src="js/menuTiny.js"></script>
+        <script type="text/javascript" src="js/submit.js"></script>
+    </head>
+    <body id="minwidth-body">
+        <div id="border-top" class="h_green">
+            <div>
+                <div>
+                    <span class="version">Version 1.0 Alpha</span>
+                    <span class="title" style="padding-left:20px">Seahog cms</span>
+                </div>
+            </div>
+        </div>
+        <div id="header-box">
+            <div id="module-status">
+                <span class="preview">
+                    <a target="_blank" href="#">Preview</a>
+                </span>
+                <a href="#">
+                    <span class="no-unread-messages">0</span>
+                </a>
+                <span class="loggedin-users">1</span>
+                <span class="logout">
+                    <a href="/zend2010/thoat.html">Logout</a>
+                </span>
+            </div>
+            <div id="module-menu">
+
+                <!-- BEGIN: Menu -->
+                <ul class="menuTiny" id="menuTiny">
+                    <li><a href="#" class="menuTinyLink">Main</a>
+                        <ul>
+                            <li><a href="#">Front End</a></li>
+                            <li><a href="#">Back End</a></li>
+
+                        </ul>
+                    </li>
+                    <li><a href="#" class="menuTinyLink">Member</a>
+                        <ul>
+                            <li><a href="#">Group manager</a></li>
+                            <li><a href="#">User manager</a></li>
+                            <li><a href="#">Permission</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="#" class="menuTinyLink">Products</a>
+                        <ul>
+                            <li><a href="#">Category manager</a></li>
+                            <li><a href="#">Product manager</a></li>
+                            <li><a href="#">Bill</a></li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <script type="text/javascript">
+                    var menu=new menu.dd("menu");
+                    menu.init("menuTiny","menuTinyHover");
+                </script><!-- END: Menu -->				
+
+
+
+
+            </div>
+            <div class="clr"></div>
+        </div>
+        <div id="content-box">
+            <div class="border">
+                <div class="padding">
+
+                    <form name="appForm" method="post" action="">
+
+
+
+                        <div id="toolbar-box">
+                            <div class="t"><div class="t"><div class="t"></div></div></div>
+                            <div class="m">
+                                <div id="toolbar" class="toolbar" >				
+                                  
+                                 
+                             <div class="toolbar-button" >
+                                   		 <a href="#">
+        								<img src="images/toolbar/icon-32-default.png">  
+                                        <br>Add new
+                                        </a>
+                                	</div>
+                                    <div class="toolbar-button" >
+                                   		 <a href="#">
+        								<img src="images/toolbar/icon-32-delete.png">  
+                                        <br>
+                                        Delete
+                                        </a>
+                                	</div>
+                                   
+                                  <div class="clr"></div>
+                                </div>
+                                <div class="header icon-48-install">Member :: Group manager</div>
+                                
+                                <div class="clr"></div>
+                            </div>
+                            <div class="b"><div class="b"><div class="b"></div></div></div>
+                        </div>
+                        <div class="clr"></div>
+                        <div id="submenu-box">
+                            <div style="border:1px solid #CCCCCC; padding:5px">
+                                <ul id="submenu">
+                                    <li>
+                                        <a href="#" class="active">Group manager</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Member manager</a>
+                                    </li>
+                                    <li>
+                                        <a href="#">Permission</a>
+                                    </li>
+                                </ul>
+                                <div class="clr"></div>
+                            </div>
+                        </div>	
+
+                        <!-- BEGIN: CONTENT -->
+                        <div id="element-box">
+                            <div class="t">
+                                <div class="t">
+                                    <div class="t"></div>
+                                </div>
+                            </div>
+                            <div class="m">
+                                <!-- BEGIN: ELEMENT BOX -->
+
+
+                                <!-- Area 4: In du lieu lay tu database -->
+                                <table class="adminlist">
+                                    <thead>
+                                        <tr>
+                                            <th width="43" ><input type="checkbox" name="checkbox" id="checkbox"></th>
+                                            <th>Group name</th>
+                                            <th width="89">Status</th>
+                                            <th width="83">ACP</th>
+                                            <th width="86">Order</th>						
+                                            <th width="77">Member</th>
+                                            <th width="90">Control</th>
+
+                                            <th width="34">ID</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tr class="even">						
+                                        <td align="center"><input type="checkbox" name="checkbox2" id="checkbox2"></td>
+                                        <td align="left">Admin</td>
+                                        <td align="center">Yes</td>
+                                        <td align="center">Yes</td>
+                                        <td align="center">
+                                        <input type="text" name="textfield" id="textfield" style="width: 30px; text-align: center;" value="1">
+                                        </td>
+
+                                        <td align="center">3</td>
+                                        <td align="center">
+                                        <a href="#">
+                                        	<img src="images/icon_info.png" width="16" height="16"> 
+                                        </a>
+                                        <a href="#">
+                                            <img src="images/icon_edit.png" width="16" height="16"> 
+                                        </a>
+                                        <a href="#">
+                                            <img src="images/icon_del.png" width="16" height="16"> 
+                                         </a></td>
+                                        <td align="center">1</td>
+                                    </tr>
+                                    <!-- BEGIN: PAGINATION (FOOT) -->
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="9">
+                                                <div class="container">
+                                                    <div class="pagination">
+                                                        <div class="limit">Display #
+                                                            <select onchange="submitform();" size="1" class="inputbox" id="limit" name="limit">
+                                                                <option value="5">5</option></select>
+                                                        </div>
+                                                        <div class="limit"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>					
+                                    </tfoot>				<!-- END: PAGINATION (FOOT) -->
+                                </table>
+                                <!-- Area 4: In du lieu lay tu database - End -->
+
+                                <!-- END: ELEMENT BOX -->	
+                              <div class="clr"></div>
+                            </div>
+                            <div class="b">
+                                <div class="b">
+                                    <div class="b"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: 	CONTENT -->
+                    </form>
+
+
+                    <div class="clr"></div>
+                </div>
+                <div class="clr"></div>
+            </div>
+        </div>
+        <div id="border-bottom"><div><div></div></div></div>
+        <div id="footer">
+            <p class="copyright">
+			Copyright © 2010 www.zend.vn. All Rights Reserved.</p>
+        </div>
+    </body>
+</html>

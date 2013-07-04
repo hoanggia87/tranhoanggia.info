@@ -1,0 +1,47 @@
+.menufeature {
+    left: 15px;
+    position: absolute;
+    top: 15px;
+    width: 220px;
+    z-index: 100;
+}
+/** form add thong tin item**/
+#add-form{display: none;}
+
+.listCategory .name{border: 1px solid #ccc;font-weight: bold;padding:0px 5px;}
+.listCategory .name.disabled{background: #eee};
+.listCategory .level_1 .name{margin-left: 0px;}
+.listCategory .level_2 .name{margin-left: 20px;}
+.listCategory .level_3 .name{margin-left: 40px;}
+.listCategory .level_4 .name{margin-left: 60px;}
+.listCategory .level_5 .name{margin-left: 80px;}
+.listCategory .con1{width: 100px;}
+
+#edit-form .field label{float: none;
+    padding: 0;
+    width: auto;margin-right: 10px;}
+
+/*fix button fearter*/
+.newfilebtn .btn {
+    position: inherit;
+    
+}
+
+.listfile li span.filename {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    white-space: nowrap;
+}
+.listfile li.blockitem{width: 100px;height: 85px;}
+.listfile .progress{margin-top: 43px;}
+.listfile li.blockitem a {
+    display: block;
+    height: 70px;
+    overflow: hidden;
+}
+
+/*fix trang media*/
+.mediamgr_menu li.right {float: right;margin-top: 0px;}
+.mediamgr_menu {overflow: auto;}
+

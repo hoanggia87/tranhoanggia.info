@@ -1,0 +1,15 @@
+<?
+
+    if(isset($this->errorMessage)){
+
+                echo $this->errorMessage;
+
+    }?>
+
+    <?
+
+                echo $this->form;
+
+    ?>
+
+    <a href="<?=$this->url(array('controller'=>'auth','action'=>'signup'))?>">New users click here?</a>

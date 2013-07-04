@@ -1,0 +1,68 @@
+<?php echo $this->doctype() ?>
+<html >
+<head>
+	<link rel="shortcut icon" href="favicon.gif">
+	<?php echo $this->headTitle() ?>
+	<?php echo $this->headMeta() ?>
+	<?php echo $this->headLink() ?>
+	<?php echo $this->headScript() ?>
+	
+</head>
+<body>
+    <?php $this->ShowMenu($this);?>
+    <div class="clear"></div>
+    <?php echo $this->layout()->content;?> 
+    <div id="footer">
+        <ul class="sidebar_widget four">
+            <li id="text-2" class="widget widget_text"><h2 class="widgettitle">Thành viên mới cần đọc!</h2>
+ 			    <div class="textwidget">
+                    <ul class="posts blog black_wrapper">
+                        <li><a href="<?php echo $this->baseUrl('gioi-thieu.shock')?>">1. Giới thiệu ShockVL</a></li>
+                        <li><a href="<?php echo $this->baseUrl('noi-quy-dang-bai.shock')?>">2. Nội quy đăng bài</a></li>
+                        <li><a href="<?php echo $this->baseUrl('hoi-dap.shock')?>">3. Hỏi đáp</a></li>
+                        <li><a href="<?php echo $this->baseUrl('lien-he.shock')?>">4. Liên hệ</a></li>
+                    </ul>
+                </div>
+      		</li>
+            <li id="text-2" class="widget widget_text"><h2 class="widgettitle">Chuyên mục</h2>
+ 			    <div class="textwidget">
+                    <ul class="posts blog black_wrapper">
+                        <li><a href="<?php echo $this->baseUrl('/new')?>">1. Video - Hình ảnh</a></li>
+                        <li><a href="<?php echo $this->baseUrl('/truyen-cuoi')?>">2. Truyện cười</a></li>
+                        <li><a href="<?php echo $this->baseUrl('bao-hay')?>">3. Báo hay</a></li>
+                        <li><a href="<?php echo $this->baseUrl('/tam-su')?>">4. Tâm sự</a></li>
+                    </ul>
+                </div>
+      		</li>
+            <li id="text-2" class="widget widget_text"><h2 class="widgettitle">Tiện ích</h2>
+ 			    <div class="textwidget">
+                    <ul class="posts blog black_wrapper">
+                        <li><a href="<?php echo $this->baseUrl('/new')?>">1. Shock toàn tập</a></li>
+                        <li><a href="<?php echo $this->baseUrl('/hot')?>">2. Bài hot</a></li>
+                        <li><a href="<?php echo $this->baseUrl('/bang-xep-hang')?>">3. Bảng xếp hạng</a></li>
+                        <li><a href="<?php echo $this->baseUrl('/dang-anh.shock')?>">4. Đăng bài</a></li>
+                    </ul>
+                </div>
+      		</li>
+        </ul>
+    </div>
+    <div id="copyright">
+		<div class="copyright_wrapper">
+			<div class="left_wrapper">Copyright 2013 ShockVL. Thành viên tự  chịu trách nhiệm về nội dung bài viết được đăng lên.</div>
+			
+			<div class="right_wrapper"></div>
+			<br class="clear">
+		</div>
+    </div>
+    <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-41295428-1', 'shockvl.com');
+  ga('send', 'pageview');
+
+</script>    
+</body>
+</html>

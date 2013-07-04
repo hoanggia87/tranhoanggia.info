@@ -1,0 +1,207 @@
+
+
+
+<style>
+.adminlist .content {
+float: left;
+margin-right: 10px;
+width: 460px;
+overflow: hidden;
+position: relative;
+}
+
+.adminlist .info-post {float: right;
+width: 240px;}
+.videoPlay {
+    
+   margin-bottom: -64px;
+    position: relative;
+    top: -220px;
+
+}
+.img-wrap{
+    position:relative;
+    text-align: center;
+}
+#paging-buttons a.disabled, #paging-buttons a.disabled:hover, #paging-buttons a.disabled:active {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4) inset, 0 1px #FFFFFF;
+    cursor: default;
+    opacity: 0.2;
+}
+#paging-buttons.paging-buttons a.previous {
+    float: left;
+}
+#paging-buttons.paging-buttons a:hover, #paging-buttons.infinite a:hover {
+    background-color: #0F67A4;
+}
+#paging-buttons a.disabled, #paging-buttons a.disabled:hover, #paging-buttons a.disabled:active {
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.4) inset, 0 1px #FFFFFF;
+    cursor: default;
+    opacity: 0.2;
+}
+#paging-buttons.paging-buttons a {
+    float: right;
+    width: 338px;
+}
+#paging-buttons a, .cbutton {
+    background: none repeat scroll 0 0 #1877B9;
+    color: #FFFFFF;
+    font-size: 15px;
+    font-weight: 700;
+    height: 30px;
+    line-height: 30px;
+    margin-top: 10px;
+    position: relative;
+    text-align: center;
+}
+.applypost{background: none repeat scroll 0 0 #1877B9;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding: 10px 40px;
+cursor: pointer;
+margin-top: 20px;
+    padding: 10px 40px;
+    display: inline-block;
+
+}
+a.applypost:link{color: white;}
+#decardpost{background: red;color: white;font-weight: bold;}
+.post-info{position: relative;
+l/eft:550px;
+float:right;
+width: 225px;}
+.contenttd{
+    position: relative;
+}
+</style>
+
+<!-- Area 4: In du lieu lay tu database -->
+<table class="adminlist">
+    <thead>
+        <tr>
+           
+           	
+            <th>Bài viết</th>
+
+            
+            
+        </tr>
+    </thead>
+	
+    					
+        <?php 
+        
+        if($this->listItems)
+        {
+            $i=0;
+            foreach ($this->listItems as $key => $value) {
+                 $i++;
+                $title=$value['title'];
+                $img=$value['img'];
+                $url=$value['url'];
+                $type=$value['type'];
+                $description=$value['description'];
+
+                $classDisabled='';
+                if(in_array($url, $this->listLinkExist))
+                {
+                    $classDisabled='disabled';
+                }
+            
+        ?>	
+        <tr class="even">
+            <td class="contenttd">
+
+                <div class="content">     
+
+
+                    <?php
+                        if($type=='blog')
+                        {
+                            ?>
+                    <div class="blog-container">
+                        <?php echo $description;?>
+                    </div>
+                            <?php
+                        }
+                        else{
+                            ?>
+
+                    <div class="img-wrap">
+                        <a href="<?php echo $url;?>" target="_blank"><img class="ovui" src="<?php echo $img;?>" alt="<?php echo $title;?>" original="<?php echo $img;?>" style="display: inline;">
+                            <?php 
+                            if($type=='video')
+                            {
+                            ?>
+                            <img class="videoPlay ovui" src="http://www.ovui.vn/images/button_play_red.png" alt="<?php echo $title;?>" original="http://www.ovui.vn/images/button_play_red.png">
+                            <?php
+                            }
+                            ?>
+                        </a>
+
+                        <div class="watermark-clear"></div>
+                    </div>    
+                    <?php
+                        }
+                    ?>                                                    
+                </div>
+                <!--div di chuyển ở đây-->
+                <div class="post-info">
+                    <div class="info-post scriptolution-stop" id="action-16894" style="position: static;">
+                        <h1><a href="#" class="jump_focus" target="_blank"><?php echo $title;?></a></h1>
+                        <div>
+                            <input type="checkbox" name="ishot_<?php echo $i;?>" id="ishot_<?php echo $i;?>" class="ishot"><label for="ishot_<?php echo $i;?>">Đây là bài HOT</label><br>
+                            <input type="checkbox" name="is18_<?php echo $i;?>" id="is18_<?php echo $i;?>" class="is18"><label for="is18_<?php echo $i;?>">Đây là bài 18+</label><br>
+                             <?php
+                            if($type=='image')
+                            {
+                            ?>
+                            <input type="radio" value="edit" name="watemark_<?php echo $i;?>" id="watemark_<?php echo $i;?>" class="watemark" checked="checked"><label for="watemark_<?php echo $i;?>">Edit chữ ký</label> - 
+                            <input type="radio" value="add" name="watemark_<?php echo $i;?>" id="watemark_<?php echo $i;?>" class="watemark"><label for="watemark_<?php echo $i;?>">Add chữ ký</label>
+                            <br>
+                            <?php } ?>
+                        </div>
+                        <div>
+                            <a class="applypost <?php echo $classDisabled;?>" href="<?php echo $url;?>" type="<?php echo $type;?>">Lưu lại bài này</a>
+                            <!--input type="button" id="decardpost" value="Bỏ qua"-->
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+    <?php 
+            }
+        ?>
+    <!-- BEGIN: PAGINATION (FOOT) -->
+    <?php
+
+  }
+
+//disabled
+$page=$this->page;
+$pagePrev=(($page-1)>0)?($page-1):1;
+$pageNext=$page+1;
+
+$disabledPrev=$disabledNext='';
+if(!$this->listItems)// nếu ko có dữ liệu thì 
+{
+    $disabledNext='disabled';
+}
+
+if($page==1 || $page<1)
+{
+    $disabledPrev='disabled';
+}
+?>
+    <tfoot>
+        <tr>
+            <td>
+                <div id="paging-buttons" class="paging-buttons">
+					<a class="previous <?php echo $disabledPrev;?>" href="#" onclick="getList(<?php echo $pagePrev;?>)">« Quay lại</a>
+					<a class="older <?php echo $disabledNext;?>" href="#" onclick="getList(<?php echo $pageNext;?>)">Xem tiếp »</a>
+				</div>
+            </td>
+        </tr>					
+    </tfoot>				<!-- END: PAGINATION (FOOT) -->
+</table>

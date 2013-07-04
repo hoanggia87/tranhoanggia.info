@@ -1,0 +1,107 @@
+<?php
+	$listChanel = $this->listChanel;
+	$selectChanel='<label for="tinh"></label><select name="chanel" id="chanel" onChange="showTruyenhinh(this.value)">';
+    $strTruyenhinh = '';
+	foreach ($this->listChanel as $k => $v) 
+    {
+        if($k == 1)
+        {
+            $strSelected ='selected="selected"';
+            $stl = '';
+        }
+        else
+        {
+            $stl = 'style="display: none;"';
+            $strSelected ='';
+        }
+		$selectChanel.='<option '.$strSelected.' value="'.$k.'">'.$v.'</option>';
+        $strTruyenhinh .= '<div id="chanel-'.$k.'" '.$stl.'>'.$this->truyenhinh[$k].'</div>';	
+	}
+	$selectChanel.='</select>';
+    $currentDate = date('d-m-Y');
+    $idcurrent = str_replace('-','',$currentDate);
+?>
+<div data-role="page" class="jqm-demos ui-responsive-panel" id="panel-fixed-thoitiet">
+
+    <div data-role="header" data-theme="c" >
+        <h1>Lịch phát sóng</h1>
+        <?php echo $this->showCategory($this);?>
+        <a href="<?php echo $this->baseUrl('');?>" data-icon="home" data-iconpos="notext" data-transition="slide">Home</a>
+    </div><!-- /header -->
+
+    <div data-role="content" class="jqm-content">
+		<div class="clr">
+            <fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+    		    <legend>Chọn kênh </legend>
+    		    <?php //echo $selectKhuvuc;?>
+    		    <?php echo $selectChanel;?>
+    		</fieldset>
+        </div>
+        <div class="clr"></div>
+        <div id="chanel-content">
+            <?php echo $strTruyenhinh; ?>
+        </div>
+        <div style="float: right; padding-top:10px; padding-left:4px;"><strong> Nguồn: </strong> <a href="http://vtv.vn/TVSchedule/132.vtv" target="_blank">Truyền hình Việt Nam</a></div>
+        <div class="clr"></div>
+	    <script type="text/javascript">
+            var _idListCur = '#t<?php echo $idcurrent;?>';
+            var _idDayCur  = '#d<?php echo $idcurrent;?>';
+            var _idChanelCur = "#chanel-1";
+            function showTruyenhinh(chanel)
+            {
+                $(_idChanelCur).hide();
+                _idChanelCur = '#chanel-' + chanel;
+                $(_idChanelCur).show();
+                //alert($(chanelID + ' ' + _idDayCur).parent().parent().html());
+                $(_idChanelCur + ' ' + _idDayCur).parent().parent().addClass('current');
+                $(_idChanelCur + ' ' + _idListCur).fadeIn(500);
+                $(_idChanelCur + ' .nav li').click(function()
+                {
+                    //alert($(chanelID + ' ' + _idDayCur).parent().parent().html());
+                   //$(chanelID + ' ' + _idDayCur).parent().parent().removeClass('current');
+                   //$(chanelID + ' ' + _idListCur).hide();
+                   //alert($(_idDayCur).val());
+                   //id =  $(this).children().children().attr('rel');
+                   //_idListCur = '#t' + id;
+                   //_idDayCur = '#d' + id;
+                   //$(_idListCur).fadeIn(500);
+                   //$(_idDayCur).parent().parent().addClass('current');
+                   return false;
+                });
+            }
+            $(document).ready(function() 
+            {
+                //$('.list-container').children().css('display','none');
+                //alert($('#chanel-content table tr td:eq(2)').html());
+                //alert($(_idChanelCur + ' ' + _idListCur).html());
+                $(_idChanelCur + ' ' + _idListCur).show();
+                $(_idChanelCur + ' ' + _idDayCur).parent().parent().addClass('current');
+                $('.nav li').click(function()
+                {
+                    //alert(_idChanelCur);
+                   $(_idChanelCur + ' ' + _idDayCur).parent().parent().removeClass('current');
+                   $(_idChanelCur + ' ' + _idListCur).hide();
+                   //alert($(_idDayCur).val());
+                   id =  $(this).children().children().attr('rel');
+                   _idListCur = '#t' + id;
+                   _idDayCur = '#d' + id;
+                   $(_idChanelCur + ' ' + _idListCur).fadeIn(500);
+                   $(_idChanelCur + ' ' + _idDayCur).parent().parent().addClass('current');
+                   return false;
+                });
+                $('#chanel-content table').attr('cellpadding','0');
+                $('#chanel-content table').attr('cellspacing','0');
+                $('#chanel-content table').attr('border','0');
+                $('#chanel-content table').addClass('ta1');
+                $('#chanel-content table th').addClass('pt_title');
+                $('#chanel-content table tr:even').addClass('pt_mau2');
+                
+            });
+                            </script>
+		
+    </div><!-- /content -->
+
+	
+	<?php echo $this->showCategory($this,'service');?>
+	
+</div><!-- /page -->

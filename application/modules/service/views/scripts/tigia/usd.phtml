@@ -1,0 +1,37 @@
+<div id="category">
+    <div class="wrapper">
+        <div id="cat-content">
+            <div id="cat-left">
+                <div id="category-detail">
+                    <div id="chanel-box">
+                        <div class="nav_link">
+                            <h2><span style="float: left;margin-right: 5px;"><a href="<?php echo DOMAIN_NAME; ?>" title="">TRANG CHỦ</a></span> <span style="float: left;margin-right: 6px; margin-top:1px"><img src="<?php echo DOMAIN_NAME;?>public/templates/public/online/images/breadcrumb-right.png" /></span> <span style="float: left;">Tỉ giá USD</span></h2>
+                        </div>
+                        <div class="category-detail">
+                            <div class="clr">
+                                <div class="xoso-title" style="float: left;">XEM TỈ GIÁ USD</div>
+                                <div style="float: right; padding-top:10px; padding-left:4px;"><strong>Nguồn: </strong> <a href="http://www.eximbank.com.vn/" target="_blank">Ngân hàng Eximbank</a></div>
+                                
+                            </div>
+                            <div class="clr"></div>
+                            <div id="tigia-usd-content">
+                                <?php echo $this->tigiaUSD;?>
+                            </div>
+                            <script>
+                                $(document).ready(function() 
+                                {
+                                    getContentTigia();
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="cat-right">
+                <?php $this->ShowMenuRight($this);?>
+                <?php $this->ShowTinTigia($this);?>
+                <?php $this->ShowCopyRight($this);?>
+            </div>
+        </div>
+    </div>
+</div>

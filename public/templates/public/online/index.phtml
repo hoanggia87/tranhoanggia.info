@@ -1,0 +1,71 @@
+<?php echo $this->doctype() ?>
+<html>
+<head>
+	<link rel="shortcut icon" href="favicon.gif">
+	<?php echo $this->headTitle() ?>
+	<?php echo $this->headMeta() ?>
+	<?php echo $this->headLink() ?>
+	<?php echo $this->headScript() ?>
+	<!--[if lt IE 9]>
+  <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <script type="text/javascript">
+        $(document).ready(function() 
+        {
+           lbSearch.init();
+         });
+    </script>
+</head>
+<body>
+    <?php $this->ShowMenu();?>
+    <div id="header">
+        <div class="wrapper">
+            <div class="header_content">
+                <h1 class="logo">
+                    <a title="Về trang chủ" href="/">LaBàn.vn - Danh bạ Internet Việt Nam</a>
+                </h1>
+                <div class="search_box">
+                    <ul>
+                        <li class="select"><a rel="1" href="#">Tất cả</a></li>
+                        <li class=""><a rel="2" href="#">MP3</a></li>
+                        <li class=""><a rel="3" href="#">Hình ảnh</a></li>
+                        <li class=""><a rel="6" href="#">Video</a></li>
+                        <li class=""><a rel="4" href="#">Tin tức</a></li>
+                        <li><a rel="5" href="#">Bản đồ</a></li>
+                        <li><a rel="7" href="#">Dịch</a></li>
+                        <li><a rel="8" href="http://vn.answers.yahoo.com/" target="_blank">Hỏi đáp</a></li>
+                    </ul>
+                    <div class="input_search">
+                        <input type="text" class="inp_box google" autocomplete="off" value="" id="txtSearchBox">
+                        <input type="hidden" id="searchType" value="1">
+                        <input type="hidden" id="searchtext" value="">
+                    </div>
+                    <a href="javascript:;" id="btnSearch" title="Tìm kiếm" class="search_btn">Tìm Kiếm</a>
+                </div>
+                <div class="setpage">
+                    <ul>
+                        <li><a href="/support/sethomepage" title="Đặt trang chủ" class="set_homepage">Đặt trang chủ</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <?php echo $this->layout()->content;?> 
+    <div id="footer">
+        <div class="wrapper">
+            <div id="footer-content">
+                <ul class="box-fot no-hover">
+        	    	<li><a href="/about.html#about">Về hao123</a><b class="space"></b></li>
+        	    	<li class="green"><a href="/feedback.html">Phản hồi</a><b class="space"></b></li>
+        	    	<li><a href="/about.html#friendlink">Trao đổi liên kết</a><b class="space"></b></li>
+        	    	<li><a href="/about/#how">Đặt làm trang chủ</a><b class="space"></b></li>
+        	    	<li><a href="/about/#uninstall">Gỡ bỏ trang chủ</a></li>
+                </ul>
+                <p style="margin-top:-10px; margin-bottom:10px;line-height:1.5;color: #999;display: block;">Ngoài logo và icon Hao123 ra , các thông tin bao gồm nhưng không hạn chế như link liên kết, logo, hình ảnh, biểu tượng, icon mà trang web này cung cấp đều thuộc sở hữu của bên thứ ba, đồng thời không có sự ràng buộc nào với Hao123 dưới bất kỳ phương thức hoặc hình thức nào.</p>
+            </div>
+        </div>
+    </div>
+<!-- Content -->
+</body>
+</html>

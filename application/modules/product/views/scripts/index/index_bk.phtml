@@ -1,0 +1,120 @@
+<script type="text/javascript">
+    jQuery(document).ready(function () {
+      jQuery('li.item').mouseover(function () {       
+        jQuery(this).find('div.info').stop().animate({
+          marginTop: '18px'
+        }, 100);
+      });
+      jQuery('li.item').mouseout(function () {
+        jQuery(this).find('div.info').stop().animate({
+          marginTop: '96px'
+        }, 100);
+      });
+    });
+</script>
+
+<div id="main-wrapper">
+    <div class="clearfix" id="main">
+        <div role="complementary" class="column sidebar" id="sidebar-second">
+            <div class="section">
+                <div class="region region-sidebar-second">
+                    <section class="block block-blog block-even" id="block-blog-recent">
+                        
+                        <?php 
+                        $this->showProducts($this,array('local'=>'category'));
+                        ?>
+       					
+       					<div class="padline3"><div class="lineH"></div></div>
+                    </section>
+                    <section class="block block-blog block-even" id="block-blog-recent">
+                        
+                        <?php 
+                        $this->showProducts($this,array('local'=>'new_product'));
+                        ?>
+                        
+                        
+                    </section><!-- /.block -->  
+                </div>
+            </div><!-- /.section -->
+        </div><!-- /#sidebar-second -->
+        <div role="main" class="column" id="content">
+            <div class="section">
+                <?php echo $this->Showpath($this);	?>
+                
+                <div class="region region-content">
+                    <div class="block block-system block-odd" id="block-system-main">
+                        <div class="content">
+                            <ul class="grid">
+                                <?php 
+                                $this->showProducts($this,array('local'=>'main'));
+                                ?>
+        						
+                            </ul>
+                            <div class="paging-wrapper">
+                                <?php 
+                                $currentUrl = $this->baseUrl('san-pham');
+                                echo $this->paginationControl($this->panigator,'Sliding','pagination_product.phtml',array('currentUrl'=>$currentUrl));
+                                ?>  
+                            
+                                
+                            </div>
+                        </div>  
+                    </div><!-- /.content -->
+                </div><!-- /.block -->
+            </div>
+        </div><!-- /.section -->
+    </div><!-- /#content -->
+</div><!-- /#main -->
+
+        
+        
+        
+ <?php /*?>       
+
+
+<div id="warrap_product">
+    <div id="content_secsion">
+        <!-- Content -->
+    	<section class="padcontent2">
+    		<div class="container_12">
+    			<div class="wrapper">
+    				<div class="grid_8">
+                        <?php echo $this->Showpath($this);	?>
+                        <div class="clear"></div>
+    					<div class="wrapper indent">
+                            <div id="produc_indent">
+                            
+                                <?php 
+                                $this->showProducts($this,array('local'=>'main'));
+                                ?>
+        						
+                                <div class="clear"></div>
+                                <div class="pagination">                                
+                                <?php 
+                                $currentUrl = $this->baseUrl('san-pham');
+                                echo $this->paginationControl($this->panigator,'Sliding','pagination_product.phtml',array('currentUrl'=>$currentUrl));
+                                ?>                                
+                            	</div>
+                                <div class="clear"></div>
+                            </div>
+    					</div>
+    				</div>
+    				<div class="grid_4">
+    					<!--h4>Featured Services</h4-->
+    					<?php 
+                        $this->showProducts($this,array('local'=>'category'));
+                        ?>
+    					<div class="padline3"><div class="lineH"></div></div>
+                        <?php 
+                        $this->showProducts($this,array('local'=>'new_product'));
+                        ?>
+                        
+                        <!--Quang cao-->
+                        <?php $this->ShowADSByModuleAndPosition('right',$this->arrParam['module'],$this);?>
+    				</div>
+    			</div>
+    		</div>
+    	</section>
+    </div>
+</div>
+<?php */ ?>

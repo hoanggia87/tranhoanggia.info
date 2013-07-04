@@ -1,0 +1,132 @@
+<?php 
+	$title 			= $this->Item['title'];
+	$summary 		= $this->cmsConvertDbToView($this->Item['summary']);
+	$content		= $this->cmsConvertDbToView($this->Item['content']);
+	$image			= $this->Item['image'];
+	$news_image		= '<img src="'.PUBLIC_URL.'/files/news/100x100/'.$this->Item['image'].'">';
+	
+	$hot			= $this->Item['hot'];
+	$created		= $this->Item['created'];
+	$created_by		= $this->Item['created_by'];
+	$modified		= $this->Item['modified'];
+	$modified_by	= $this->Item['modified_by'];
+	$hit			= $this->Item['hit'];
+	$status			= $this->Item['status'];
+	$cat_name		= $this->Item['cat_name'];
+	$order			= $this->Item['order'];
+
+?>
+<form name="appForm" method="post" action="">
+
+
+
+                        <?php echo $this->render('admin-product/toolbar/index.php')?>
+                        <div class="clr"></div>
+                         <?php echo $this->render('admin-product/sublink/index.php')?>
+
+                        <!-- BEGIN: CONTENT -->
+                        <div id="element-box">
+                            <div class="t">
+                                <div class="t">
+                                    <div class="t"></div>
+                                </div>
+                            </div>
+                            <div class="m">
+                                <!-- BEGIN: ELEMENT BOX -->
+						<div id="adminfieldset">
+                             <div class="adminheader">Item Detail</div>
+								
+								<div id="row">
+                                    <div class="label">Title:</div>
+                                    <?php echo $title;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Image:</div>
+                                    <?php echo $image.'<br />'.$news_image;?>			
+                                </div>
+                                <div class="clr"></div>
+                                                               
+                                <div id="row">
+                                    <div class="label">Hot:</div>
+                                    <?php echo $hot;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Status:</div>
+                                    <?php echo $status;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Category:</div>
+                                    <?php echo $cat_name;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Order:</div>
+                                    <?php echo $order;?>			
+                                </div>
+                                <div class="clr"></div>
+                                 
+                                <div id="row">
+                                    <div class="label">Hit:</div>
+                                    <?php echo $hit;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Created:</div>
+                                    <?php echo $created;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Created by:</div>
+                                    <?php echo $created_by;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Modified:</div>
+                                    <?php echo $modified;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Modified by:</div>
+                                    <?php echo $modified_by;?>			
+                                </div>
+                                <div class="clr"></div>
+                                                                
+                                <div id="row">
+                                    <div class="label">Summary:</div>
+                                    <div class="clr"></div>
+                                    <?php echo $summary;?>	
+                                    		
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Content:</div>
+                                    <div class="clr"></div>
+                                    <?php echo $content;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+							</div>
+							
+                                <!-- END: ELEMENT BOX -->	
+                              <div class="clr"></div>
+                            </div>
+                            <div class="b">
+                                <div class="b">
+                                    <div class="b"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: 	CONTENT -->
+                    </form>

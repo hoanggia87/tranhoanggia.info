@@ -1,0 +1,233 @@
+<?php 
+
+    $name       = $this->formText('name',$this->Item['name'],array('class'=>'input-large','placeholder'=>'Tên danh mục'));
+    //list Category select
+    $option = $this->listCat;    
+    unset($option[$this->Item['id']]);  
+    foreach ($option as $key=>$value) 
+        if($value['id']==$this->Item['id']) 
+              unset($option[$key]);   
+    $listCat = $this->cmsCategorySelect('parents',$this->Item['parents'],$option,array('class'=>'uniformselect'));
+
+    //$parent_name= $this->Item['parent_name'];
+    //$order      = $this->formText('order',$this->Item['order'],array('class'=>'txtmedium'));
+
+
+    $options        = array(' Ẩn ',' Hiện ');
+    $status         = $this->formRadio('status',$this->Item['status'],array('class'=>'radioCustom'),$options,'');
+    
+
+    
+    $createdDate=$this->Item['created_fm'];
+    $modifiedDate=$this->Item['modified_fm'];
+    $created_by=$this->arrInfoUser[$this->Item['created_by']]['full_name'];
+    $modified_by=$this->arrInfoUser[$this->Item['modified_by']]['full_name'];
+    
+
+
+    $id=$this->formHidden('id',$this->Item['id']);
+    if(!empty($this->errors)){
+        $errors = $this->formErrors($this->errors );
+    }
+?>
+
+<div class="mainwrapper">
+    
+    <!-- START OF LEFT PANEL -->
+    <div class="leftpanel">
+        <?php $this->adminMenu($this);?>
+    </div><!--mainleft-->
+    <!-- END OF LEFT PANEL -->
+    
+    <!-- START OF RIGHT PANEL -->
+    <div class="rightpanel">
+        <?php $this->adminHeaderpanel($this);?>
+        <?php $this->adminBreadcrumbwidget($this);?>
+
+
+        <div class="pagetitle">                              
+            <h1>Dashboard</h1> <span>This is a sample description for dashboard page...</span>            
+            
+            
+        </div><!--pagetitle-->
+        
+        
+
+
+        <div class="maincontent">
+            <div class="contentinner">
+                
+                    <div class="mediamgr_head">
+                        <ul class="mediamgr_menu">     
+
+                            <li class="newfilebtn">
+                                <div class='buttonfeature'>
+                                    <a href="javascript:void(0);"  class="btn btn-info saveItem" id="saveItem"><i class="icon-edit"></i> Cập nhật</a>
+                                    <a href="javascript:void(0);"  class="btn btn-warning deleteItem"  id="deleteItem"><i class="icon-warning-sign"></i> Xóa</a>
+                                </div>
+                            </li>
+                        </ul>
+                        <span class="clearall"></span>
+                    </div><!--mediamgr_head-->
+
+
+                    <h4 class="widgettitle nomargin shadowed">Thông tin Category</h4>
+                    <div class="widgetcontent bordered shadowed nopadding">
+                    <form class="stdform stdform2" method="post" action="forms.html" id="edit-form">
+                            <p>
+                                <label>Tên danh mục</label>
+                                <span class="field"><?php echo $name;?></span>
+                            </p>
+                            
+                            <p>
+                                <label>Danh mục cha</label>
+                                <span class="field" id="ajax-content-category-select"><?php echo $listCat;?></span>
+                            </p>
+                            
+                            <p>
+                                <label>Trạng thái</label>
+                                <span class="field"><?php echo $status;?></span>
+                            </p>
+                            <p>
+                                <label></label>
+                                <span class="field">
+                                    <?php echo $id;?>
+                                    Tạo bởi <b><?php echo $created_by;?></b> vào lúc <em><?php echo $createdDate;?></em><br>
+                                    Chỉnh sửa bởi <b><?php echo $modified_by;?></b> vào lúc <em><?php echo $modifiedDate;?></em><br>
+                                </span>
+                            </p>
+                            
+                            
+                                                    
+                          
+                        </form>
+                    </div><!--widgetcontent-->
+            </div>
+        </div>
+
+        
+    </div><!--mainright-->
+    <!-- END OF RIGHT PANEL -->
+    
+    <div class="clearfix"></div>
+    <?php $this->adminFooterpanel($this);?>
+    
+
+    
+</div><!--mainwrapper-->
+
+
+
+<script>
+   
+   
+    jQuery('#saveItem').click(function(event){
+        event.preventDefault();
+        
+        var objThis=this;
+        jQuery(objThis).addClass('disabled').attr('type','button');
+        
+        jQuery.ajax({
+                url: "<?php echo $this->baseUrl('product/admin-product-category/save');?>",
+                data: jQuery('#edit-form').serialize(),
+                async:true,
+                beforeSend: function () {
+                    jQuery(".contentinner .alert").remove();
+                },
+                success: function(jsonRespon) {
+                    
+                  jQuery(objThis).removeClass('disabled');
+
+                    var arrParam=jQuery.parseJSON(jsonRespon);
+                    //ẩn form nhập
+                    //jQuery('#add-form').fadeOut('slow'); 
+                    if(arrParam['error'].length!=0)
+                    {
+                         jQuery(".contentinner").prepend('<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button">×</button>Có gì đó không đúng, Xin hãy kiểm tra lại dữ liệu nhập</div>');
+                        
+                    }
+                    else
+                    {
+                        
+                        //append thong bao
+                        jQuery(".contentinner").prepend('<div class="alert alert-info" style="display:none;"><button class="close" data-dismiss="alert" type="button">×</button>Bạn đã cập nhật thành công</div>');
+                        jQuery(".contentinner").find(".alert.alert-info").fadeIn();
+                        //lay du lieu thanh cong thi load lai list
+                        
+                       
+                        setTimeout(function() {
+                            jQuery(".contentinner").find(".alert.alert-info").fadeOut().remove();
+                        }, 3000);
+                    }
+                     
+                }
+            });
+
+    });
+
+    jQuery('#deleteItem').click(function(event){
+        event.preventDefault();
+        
+        jConfirm('Bạn có chắc chắn muốn xóa không', 'Xác nhận', function(r) {
+            if(r==true)
+            {
+                var objThis=this;
+                jQuery(objThis).addClass('disabled').attr('type','button');
+                
+                jQuery.ajax({
+                        url: "<?php echo $this->baseUrl('product/admin-product-category/delete');?>",
+                        data: jQuery('#edit-form').serialize(),
+                        async:true,
+                        beforeSend: function () {
+                            jQuery(".contentinner .alert").remove();
+                        },
+                        success: function(jsonRespon) {
+                            
+                          jQuery(objThis).removeClass('disabled');
+
+                            var arrParam=jQuery.parseJSON(jsonRespon);
+                            //ẩn form nhập
+                            //jQuery('#add-form').fadeOut('slow'); 
+                            if(arrParam['error'].length!=0)
+                            {
+                                 jQuery(".contentinner").prepend('<div class="alert alert-error"><button class="close" data-dismiss="alert" type="button">×</button>Có gì đó không đúng, Xin hãy kiểm tra lại dữ liệu nhập</div>');
+                                
+                            }
+                            else
+                            {
+                                
+                                jQuery(".contentinner").html('');
+
+                                //append thong bao
+                                jQuery(".contentinner").prepend('<div class="alert alert-info" style="display:none;"><button class="close" data-dismiss="alert" type="button">×</button>Bạn đã xóa thành công. Bạn sẽ chuyển về trang chủ sau vài giây. </div>');
+                                jQuery(".contentinner").find(".alert.alert-info").fadeIn();
+                                //lay du lieu thanh cong thi load lai list
+                                
+                               
+                                setTimeout(function() {
+                                    window.location.href="<?php echo $this->baseUrl('product/admin-product-category/index');?>";
+                                }, 2000);
+                            }
+                             
+                        }
+                    });
+            }
+            else
+            {
+                jConfirm.hide();
+            }                    
+        });
+
+
+        
+
+    });
+
+
+    jQuery(document).ready(function(){
+    
+    });
+</script>
+
+
+

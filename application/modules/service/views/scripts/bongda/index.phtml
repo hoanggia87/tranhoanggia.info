@@ -1,0 +1,269 @@
+<?php
+    $country = $this->country;
+    $strCountry = '';
+    foreach ($country as $k => $v) {
+		$strCountry.='<option value="'.$k.'">'.$v.'</option>';	
+        $strAnotherCity .= '<li><a href="#" title="" onclick="changeCity(\''.$k.'\')">'.mb_strtoupper($listLocation[$k],'UTF-8').'</a></li>';	
+	}
+    $strCountryBXH = '<label for="bxh"><strong>Giải</strong>: </label><select name="bxh" onChange="showInfoBXH(this.value)" id="bxh">';
+    $strCountryBXH .= $strCountry;
+    $strCountryBXH .= '</select>';
+    $strCountryLTD = '<label for="tinh"><strong>Giải</strong>: </label><select name="ltd" id="ltd">';
+    $strCountryLTD .= $strCountry;
+    $strCountryLTD .= '</select>';
+    //$strInfoLTD .= '<span id="bxh-info-all">LỊCH THI ĐẤU : ANH</span>';  
+    //$strInfoBXH .= '<span id="bxh-info-all">BẢNG XẾP HẠNG : ANH</span>';
+    $arrDefaultShow = array('1');
+    foreach ($this->bxh as $key => $value) 
+	{
+	    if(in_array($key,$arrDefaultShow))
+        {
+            //echo 'test';
+            $strShow ='';
+            $hide = '';
+        }
+        else
+        {
+            $strShow ='display:none';
+            $hide ='style="display:none"';
+            
+        }
+        $strInfoBXH .= '<span '.$hide.' id="bxh-info-'.$key.'">BẢNG XẾP HẠNG: '. mb_strtoupper($country[$key],'UTF-8').'</span>';
+        $bxh .= '<div class="info_bxh" id="info-bxh-'.$key.'" style="'.$strShow.'">
+                        '.$value.'
+                    </div>';
+	}
+    $strDay = '<select name="day" id="day">';
+    for($i=1;$i<=31;$i++)
+    {
+        if($i == date('d'))
+        {
+            $strSelected ='selected="selected"';
+        }
+        else
+        {
+            $strSelected ='';
+        }
+        if($i<10)
+        {
+            $ii = '0'.$i;
+        }
+        else
+        {
+            $ii = $i;
+        }
+        $strDay.='<option '.$strSelected.' value="'.$ii.'">'.$ii.'</option>';
+    }
+    $strDay .= '</select>';
+    $strMonth = '<select name="month" id="month">';
+    for($i=1;$i<=12;$i++)
+    {
+        if($i == date('m'))
+        {
+            $strSelected ='selected="selected"';
+        }
+        else
+        {
+            $strSelected ='';
+        }
+        if($i<10)
+        {
+            $ii = '0'.$i;
+        }
+        else
+        {
+            $ii = $i;
+        }
+        $strMonth.='<option '.$strSelected.' value="'.$ii.'">'.$ii.'</option>';
+    }
+    $strMonth .= '</select>';
+    
+    $strYear = '<select name="year" id="year">';
+    for($i=date('Y');$i>=2011;$i--)
+    {
+        if($i == date('Y'))
+        {
+            $strSelected ='selected="selected"';
+        }
+        else
+        {
+            $strSelected ='';
+        }
+        $strYear.='<option '.$strSelected.' value="'.$i.'">'.$i.'</option>';
+    }
+    $strYear .= '</select>';
+    foreach($this->ltd as $key => $val)
+    {
+        if(in_array($key,$arrDefaultShow))
+        {
+            $hide = '';
+        }
+        else
+        {
+            $hide ='style="display:none"';
+            
+        }
+        $ltd .= '<div '.$hide.' id="ltd-'.$key.'">'.$val.'</div>';
+    }
+?>
+<div id="category">
+    <div class="wrapper">
+        <div id="cat-content">
+            <div id="cat-left">
+                <div id="category-detail">
+                    <div class="nav_link">
+                        <h2><span style="float: left;margin-right: 5px;"><a href="<?php echo DOMAIN_NAME; ?>" title="">TRANG CHỦ</a></span> <span style="float: left;margin-right: 6px; margin-top:1px"><img src="<?php echo DOMAIN_NAME;?>public/templates/public/online/images/breadcrumb-right.png" /></span> <span style="float: left;">Bóng đá</span></h2>
+                    </div>
+                    <div class="category-detail">
+                        <div class="tabs-wrap account-settings">
+                            <div class="tabs-head">
+    			
+                    			<a href="#" class="active">Bảng xếp hạng</a>
+                    			<a href="#" class="">Lịch thi đấu</a>
+                    			<a href="#" class="">Tỉ lệ cược</a>
+                    		</div>
+                            <div class="tabs-contents shadow light">
+                                <div class="content active">
+                                    <div class="clr">
+                                        <div class="thoitiet-title" style="float: left;"><?php echo $strInfoBXH;?></div>
+                                        <div style="float: right; padding-top:10px; padding-left:4px;"><strong> - Nguồn: </strong> <a href="http://thethao.vnexpress.net/bang-xep-hang/ngoai-hang-anh-2012-2013-1-127.html" target="_blank">VNExpress</a></div>
+                                        <div style="float: right; padding-top:10px;"><?php echo $strCountryBXH;?></div>
+                                    </div>
+                                    <div class="clr"></div>
+                                    <?php echo $bxh; ?>
+                                    <div class="clr"></div>
+                                </div>
+                                <div class="content">
+                                    <div class="clr" style="margin-top: 15px;">
+                                        <div class="clr">
+                                            <div class="truyenhinh-title" style="float: left;">
+                                                <div style="float: left; padding-right:10px;"><strong>Ngày: </strong> <?php echo $strDay;?></div>
+                                                <div style="float: left; padding-right:10px;"><strong>Tháng: </strong> <?php echo $strMonth;?></div>
+                                                <div style="float: left; padding-right:10px;"><strong>Năn: </strong> <?php echo $strYear;?></div>
+                                                <div style="float: left; padding-right:10px;"> <?php echo $strCountryLTD;?></div>
+                                                <div style="float: left;"><strong><a style="color: red;" id="showlist" onclick="return false;">XEM LỊCH</a></strong></div>
+                                            </div>
+                                            <div style="float: right; padding-left:4px;"><strong> Nguồn: </strong> <a href="http://thethao.vnexpress.net/lich-thi-dau" target="_blank">VNExpress</a></div>
+                                        </div>
+                                        <div class="clr"></div>
+                                        <div id="ajax-flag" style="display: none; text-align: center;"><img src="<?php echo $this->baseUrl('public/templates/public/online/images/loading.gif') ?>" /></div>
+                                        <?php echo $ltd; ?>
+                                        <div class="clr"></div>
+                                    </div>
+                                </div>
+                                <div class="content">
+                                    <div class="clr">
+                                        <div class="thoitiet-title" style="float: left;">TỈ LỆ CƯỢC</div>
+                                        <div style="float: right; padding-top:10px; padding-left:4px;"><strong> Nguồn: </strong> <a href="http://w2.ketqua-tructuyen.com/ty-le-ca-cuoc-bong-da.aspx" target="_blank">Kết quả trực tuyến</a></div>
+                                        
+                                    </div>
+                                    <?php echo $this->tilecuoc;?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(document).ready(function(e) {
+                	$('.tabs-wrap .tabs-head a').click(function(e){
+                		e.preventDefault();
+                		$(this).blur();
+                		$(this).siblings().removeClass('active');
+                		$(this).addClass('active');
+                		$('.tabs-wrap .tabs-contents .content').removeClass('active');				
+                		$($('.tabs-wrap .tabs-contents .content')[$(this).index()]).addClass('active');
+                	});
+                });
+                function showInfoBXH(id)
+                {
+                    //alert('test');
+                    $('.info_bxh').hide();
+                    $('.thoitiet-title span').hide();
+                    var showID = '#info-bxh-'+id;
+                    var infoID = '#bxh-info-'+id;
+                    $(showID).fadeIn(1000);
+                    $(infoID).fadeIn(1000);
+                }
+                var _curentLocation = '1';
+                var n = new Date();
+                var month = n.getMonth()+1;
+                var day = n.getDate();
+                var _curentDate = n.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
+                $('#showlist').click(function()
+                {
+                    var day = $('select[name=day] option:selected').val();
+                    var month = $('select[name=month] option:selected').val();
+                    var year = $('select[name=year] option:selected').val();
+                    var date = year + '-' + month + '-' + day;
+                    var location = $('select[name=ltd] option:selected').val();
+                    if(date == _curentDate)
+                    {
+                        //alert('test');
+                        //return;
+                        if(location == _curentLocation)
+                        {
+                            return;
+                        }
+                        else
+                        {
+                            $('#ltd-' + _curentLocation).hide();
+                            $('#ltd-' + location).fadeIn(1000);
+                            _curentLocation = location;
+                            _curentDate = date;
+                        }
+                        return;
+                    }
+                    $('#ajax-flag').show();
+                    $('#ltd-' + _curentLocation).hide();
+                    $.ajax({
+                          type: 'POST',
+                          url:BASE_URL+'service/bongda/lichthidau',
+                          data: {date:date},
+                          dataType:'json',
+                          success:function(data){ 
+                            if(parseInt(data.rs) == 1)
+                            {
+                                //alert(data.hanoi);
+                                $('#ltd-1').html(data.anh);
+                                $('#ltd-2').html(data.tbn);
+                                $('#ltd-3').html(data.y);
+                                $('#ltd-4').html(data.duc);
+                                $('#ltd-5').html(data.phap);
+                                $('#chanel-content table').attr('cellpadding','0');
+                                $('#chanel-content table').attr('cellspacing','0');
+                                $('#chanel-content table').attr('border','0');
+                                $('#chanel-content table').attr('width','100%');
+                                $('#ltd-' + _curentLocation).hide();
+                                $('#ltd-' + location).fadeIn(1000);
+                                _curentLocation = location;
+                                _curentDate = date;
+                                $('#ajax-flag').hide(); 
+                                return false;            
+                            }
+                            else
+                            {
+                                
+                            }
+                          }   
+                        });        
+                });
+                //alert(_curentDate);
+                //alert($('#chanel-content table tr td:eq(2)').html());
+                $('#chanel-content table').attr('cellpadding','0');
+                $('#chanel-content table').attr('cellspacing','0');
+                $('#chanel-content table').attr('border','0');
+                $('#chanel-content table').attr('width','100%');
+                /*$('#chanel-content table').addClass('ta1');
+                $('#chanel-content table th').addClass('pt_title');
+                $('#chanel-content table tr:even').addClass('pt_mau2');*/
+
+            </script>
+            <div id="cat-right">
+                <?php $this->ShowMenuRight($this);?>
+                <?php $this->ShowTinBongda($this);?>
+                <?php $this->ShowCopyRight($this);?>
+            </div>
+        </div>
+    </div>
+</div>

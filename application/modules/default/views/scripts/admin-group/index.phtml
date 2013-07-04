@@ -1,0 +1,152 @@
+<?php 
+	
+	$ssFilter = $this->arrParam['ssFilter'];
+	
+	//CREATE SEARCH AREA
+	$keywords = $this->formText('keywords',$ssFilter['keywords'],array('class'=>'txtshort'));
+	$linkSearch = $this->baseUrl($this->currentController . '/filter/type/search/key/1');
+	$btnSearch = $this->formButton('search-now','Search now',
+									array('onclick'=>"OnSubmitForm('" . $linkSearch . "')"));
+	$linkResetSearch = $this->baseUrl($this->currentController . '/filter/type/search/key/0');							
+	$btnResetSearch = $this->formButton('clear-keywords','Clear',
+									array('onclick'=>"OnSubmitForm('" . $linkResetSearch . "')"));	
+	 $strSearch = $keywords . ' ' . $btnSearch . ' ' . $btnResetSearch;																	
+?>
+<form name="appForm" method="post" action="">
+
+
+
+                        <?php echo $this->render('admin-group/toolbar/index.php')?>
+                        <div class="clr"></div>
+                         <?php echo $this->render('admin-group/sublink/index.php')?>
+
+                        <!-- BEGIN: CONTENT -->
+                        <div id="element-box">
+                            <div class="t">
+                                <div class="t">
+                                    <div class="t"></div>
+                                </div>
+                            </div>
+                            <div class="m">
+                                <!-- BEGIN: ELEMENT BOX -->
+								<div id="filters">
+									<div>
+										<?php echo $strSearch;?>
+									</div>
+								</div>	
+
+                                <!-- Area 4: In du lieu lay tu database -->
+                                <table class="adminlist">
+                                    <thead>
+                                        <tr>
+                                            <th width="43" >
+                                            	<input type="checkbox" name="checkbox" id="checkbox" onclick="checkedAll()">
+                                           	</th>
+                                            <th>Group name</th>
+                                            <th width="89">Status</th>
+                                            <th width="83">ACP</th>
+                                            <th width="83">Permission</th>
+                                            <th width="86">Order</th>						
+                                            <th width="77">Member</th>
+                                            <th width="90">Control</th>
+
+                                            <th width="34">ID</th>
+                                        </tr>
+                                    </thead>
+									<?php 
+										foreach($this->Items as $key => $val){
+											$id 			= $val['id'];
+											$group_name 	= $val['group_name'];
+											$permission		= $val['permission'];
+											$status 		= $val['status'];
+											if($status == 1){	
+												$linkStatus = $this->baseUrl($this->currentController . '/status/type/0/id/' . $id . '/page/' . $this->arrParam['page']);											
+												$status = $this->cmsIconButton('Active', $this->imgUrl . '/icon/active.png',$linkStatus);
+											}else{
+												$linkStatus = $this->baseUrl($this->currentController . '/status/type/1/id/' . $id . '/page/' . $this->arrParam['page']);
+												$status = $this->cmsIconButton('INactive', $this->imgUrl . '/icon/inactive.png',$linkStatus);
+											}
+											
+											$group_acp 		= $val['group_acp'];
+											if($group_acp == 1){												
+												$group_acp = $this->cmsIconButton('Access', $this->imgUrl . '/icon/active.png');
+											}else{												
+												$group_acp = $this->cmsIconButton('No access', $this->imgUrl . '/icon/inactive.png');
+											}
+											
+											$members 		= $val['members'];
+											$order 			= $this->formText('order[' . $val['id'] . ']' ,$val['order'],array('style'=>'width: 30px; text-align: center;'));
+											
+											$linkInfo		= $this->baseUrl($this->currentController . '/info/id/' . $id);											
+											$btnInfo		= $this->cmsIconButton('View Item',$this->imgUrl . '/icon_info.png',$linkInfo);
+											
+											$linkEdit		= $this->baseUrl($this->currentController . '/edit/id/' . $id);
+											$btnEdit		= $this->cmsIconButton('Edit Item',$this->imgUrl . '/icon_edit.png',$linkEdit);
+											
+											$linkDelete		= $this->baseUrl($this->currentController . '/delete/id/' . $id);
+											$btnDelete		= $this->cmsIconButton('Delete Item',$this->imgUrl . '/icon_del.png',$linkDelete);
+										
+											$strIconButton	= $btnInfo . ' ' . $btnEdit . ' ' . $btnDelete;
+											
+											$cid			= $this->formCheckbox('cid[]',$val['id']);
+									?>
+                                    <tr class="even">						
+                                        <td align="center"><?php echo $cid;?></td>
+                                        <td align="left"><?php echo $group_name;?></td>
+                                        <td align="center"><?php echo $status;?></td>
+                                        <td align="center"><?php echo $group_acp;?></td>
+                                        <td align="center"><?php echo $permission;?></td>
+                                        <td align="center"><?php echo $order;?></td>
+                                        <td align="center"><?php echo $members;?></td>
+                                        <td align="center"><?php echo $strIconButton;?></td>
+                                        <td align="center"><?php echo $id;?></td>
+                                    </tr>
+                                    <?php 
+										}
+                                    ?>
+                                    <!-- BEGIN: PAGINATION (FOOT) -->
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="9">
+                                                <div class="container">
+                                                    <div class="pagination">
+                                                        <?php 
+                                                        				
+                                                        	$currentUrl = $this->baseUrl($this->currentController . '/index');
+                                                        	echo $this->paginationControl($this->panigator,'Sliding','pagination.phtml',array('currentUrl'=>$currentUrl));
+                                                        	// display items per page
+                                                        	$linkSlbPagging = $this->baseUrl($this->currentController . '/filter/type/pagging');
+                                                        	$options = array(5=>'5',
+                                                        					10=>'10',
+                                                        					20=>'20',
+                                                        					30=>'30',
+                                                        					50=>'50',
+                                                        					100=>'100',
+                                                        					200=>'200');
+                                                        	if($ssFilter['pagging']=='')
+                                                        		$ssFilter['pagging']=20;
+															$numPerPage = $this->formSelect('pagging',$ssFilter['pagging'],
+																							array('onchange'=>"OnSubmitForm('" . $linkSlbPagging . "')"),
+																							$options);
+															echo 'Items per page:'.$numPerPage;
+                                                        ?>
+                                                        <div class="limit"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>					
+                                    </tfoot>				<!-- END: PAGINATION (FOOT) -->
+                                </table>
+                                <!-- Area 4: In du lieu lay tu database - End -->
+
+                                <!-- END: ELEMENT BOX -->	
+                              <div class="clr"></div>
+                            </div>
+                            <div class="b">
+                                <div class="b">
+                                    <div class="b"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: 	CONTENT -->
+                    </form>

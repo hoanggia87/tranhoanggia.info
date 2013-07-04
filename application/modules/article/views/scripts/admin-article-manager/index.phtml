@@ -1,0 +1,288 @@
+<?php 
+	
+	$ssFilter = $this->arrParam['ssFilter'];
+	$action_link 	= $this->baseUrl($this->currentController . '/filter/type/order');
+	$lblTitle 	= $this->cmsLinkSort('Title','n.title',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);
+	
+	$lblStatus		= $this->cmsLinkSort('Show','n.status',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);	
+	$lblIsAdult		= $this->cmsLinkSort('18+','n.is_adult',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);	
+	$lblIsHot		= $this->cmsLinkSort('Hot','n.is_hot',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);	
+
+	$lblOrder		= $this->cmsLinkSort('Order','n.order',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);
+	$lblCreated= $this->cmsLinkSort('Created','n.created',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);
+										
+	$lblCat 		= $this->cmsLinkSort('Website','cat_name',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);																	
+	$lblType 		= $this->cmsLinkSort('Type','type',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);			
+
+	$lblID 		= $this->cmsLinkSort('ID','n.id',$ssFilter,
+										$this->imgUrl . '/icon',$action_link);
+
+	//-------------------CREATE CATEGORY SELECTBOX ------------------------
+	$linkSlbCategory = $this->baseUrl($this->currentController . '/filter/type/category');
+	$options = $this->listCat;
+	
+	$slbCategory = $this->cmsCategorySelect('cat_id',$ssFilter['cat_id'],$options,array('onchange'=>"OnSubmitForm('" . $linkSlbCategory . "')"));
+	$selectCategory = ' - Category: ' . $slbCategory;
+	
+	//-------------------CREATE DATE FILTER ------------------------
+	$dateFrom	= '  -  Date from: '.$this->cmsDatepicker('date_from',$ssFilter['date_from'],array('class'=>'txtshort'), $this,'birthday');
+	$dateTo		= ' - Date to: '.$this->cmsDatepicker('date_to',$ssFilter['date_to'],array('class'=>'txtshort'), $this,'birthday');
+	$linkSearch = $this->baseUrl($this->currentController . '/filter/type/date/key/1');
+	$btnSearch = $this->formButton('search-now','Filter by date',
+									array('onclick'=>"OnSubmitForm('" . $linkSearch . "')"));
+	$linkResetSearch = $this->baseUrl($this->currentController . '/filter/type/date/key/0');							
+	$btnResetSearch = $this->formButton('clear-keywords','Show all',
+									array('onclick'=>"OnSubmitForm('" . $linkResetSearch . "')"));
+	$strDateSearch = $dateFrom . ' ' . $dateTo . ' ' . $btnSearch . ' ' . $btnResetSearch;	
+	
+	//CREATE SEARCH AREA
+	$keywords = $this->formText('keywords',$ssFilter['keywords'],array('class'=>'txtshort'));
+	$linkSearch = $this->baseUrl($this->currentController . '/filter/type/search/key/1');
+	$btnSearch = $this->formButton('search-now','Search now',
+									array('onclick'=>"OnSubmitForm('" . $linkSearch . "')"));
+	$linkResetSearch = $this->baseUrl($this->currentController . '/filter/type/search/key/0');							
+	$btnResetSearch = $this->formButton('clear-keywords','Clear',
+									array('onclick'=>"OnSubmitForm('" . $linkResetSearch . "')"));	
+	 $strSearch = $keywords . ' ' . $btnSearch . ' ' . $btnResetSearch;	
+	 $this->view->errors;															
+?>
+
+<!--input type="button" id="getdata" value="get data from laban.vn">
+<div id="result"></div>
+<script>
+	var _cid=1;
+	var _maxcid=44;
+	function getData()
+	{
+
+		
+		$.ajax({
+            url: "<?php echo DOMAIN_NAME.'weblink/admin-weblink/get-list-data';?>",
+            data: { cid:_cid},            
+            async:true,
+            beforeSend: function () {
+                
+            },
+            success: function(jsonRespon) {
+                
+                if(_cid<=_maxcid)
+                {
+                	_cid++;	
+                	getData();
+                	
+                }
+                //var arrvalue=$.parseJSON(jsonRespon);
+             
+            }
+        });
+	}
+
+	$("#getdata").click(function(){
+		 getData();
+	});
+
+</script-->
+<style>
+.adminlist td{
+vertical-align:top;
+}
+.videoPlay {
+    
+   margin-bottom: -64px;
+    position: relative;
+    top: -110px;
+
+}
+td h2{
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+</style>
+<form name="appForm" method="post" action="">
+
+
+
+                        <?php echo $this->render('admin-article-manager/toolbar/index.php')?>
+                        <div class="clr"></div>
+                         <?php echo $this->render('admin-article-manager/sublink/index.php')?>
+
+                        <!-- BEGIN: CONTENT -->
+                        <div id="element-box">
+                            <div class="t">
+                                <div class="t">
+                                    <div class="t"></div>
+                                </div>
+                            </div>
+                            <div class="m">
+                                <!-- BEGIN: ELEMENT BOX -->
+								<div id="filters">
+									<div style="float:left;">
+										<?php echo $strSearch . $strDateSearch;?>
+									</div>
+									<div  style="float:right;">
+										<?php echo $selectCategory;?>
+									</div>
+									<div class="clr"></div>
+								</div>	
+
+                                <!-- Area 4: In du lieu lay tu database -->
+                                <table class="adminlist">
+                                    <thead>
+                                        <tr>
+                                            <th width="43" >
+                                            	<input type="checkbox" name="checkbox" id="checkbox" onclick="checkedAll()">
+                                           	</th>
+                                           	<th width="48">Image</th>
+                                            <th><?php echo $lblTitle;?></th>
+
+                                            
+                                            <th width="50"><?php echo $lblIsAdult;?></th>
+                                            <th width="50"><?php echo $lblIsHot;?></th>                                           
+											<th width="50"><?php echo $lblStatus;?></th>
+
+                                            <th width="150"><?php echo $lblCreated;?></th>						
+                                            <th width="100"><?php echo $lblCat;?></th>
+                                            <th width="100"><?php echo $lblType;?></th>
+                                            
+                                            <th width="90">Control</th>
+
+                                            <th width="34"><?php echo $lblID;?></th>
+                                        </tr>
+                                    </thead>
+									<?php 
+										foreach($this->Items as $key => $val){
+											$id 			= $val['id'];
+											if($val['type']=='video')
+											{
+												$image	= '<img width="200" src="'.$val['image'].'">
+												<img class="videoPlay" src="http://www.ovui.vn/images/button_play_red.png">';	
+											}
+											else
+											{
+												$image	= '<img  width="200" src="'.PUBLIC_URL.'/files/article/images/'.$val['image'].'">';	
+											}
+											$title			= $val['title'];
+											
+											$created 		= $val['create_date'];
+											$site_name 		= $val['site_name'];
+											$type=$val['type'];
+											$status 		= $val['status'];
+											if($status == 1){	
+												$linkStatus = $this->baseUrl($this->currentController . '/status/type/0/id/' . $id . '/page/' . $this->arrParam['page']);											
+												$status = $this->cmsIconButton('Active', $this->imgUrl . '/icon/active.png',$linkStatus);
+											}else{
+												$linkStatus = $this->baseUrl($this->currentController . '/status/type/1/id/' . $id . '/page/' . $this->arrParam['page']);
+												$status = $this->cmsIconButton('INactive', $this->imgUrl . '/icon/inactive.png',$linkStatus);
+											}											
+											
+											
+											$isAdult 		= $val['is_adult'];
+											if($isAdult == 1){	
+												$linkisAdult = $this->baseUrl($this->currentController . '/isadult/type/0/id/' . $id . '/page/' . $this->arrParam['page']);											
+												$isAdult = $this->cmsIconButton('Active', $this->imgUrl . '/icon/active.png',$linkisAdult);
+											}else{
+												$linkIsAdult = $this->baseUrl($this->currentController . '/isadult/type/1/id/' . $id . '/page/' . $this->arrParam['page']);
+												$isAdult = $this->cmsIconButton('INactive', $this->imgUrl . '/icon/inactive.png',$linkIsAdult);
+											}	
+
+
+											$isHot 		= $val['is_hot'];
+											if($isHot == 1){	
+												$linkIsHot = $this->baseUrl($this->currentController . '/ishot/type/0/id/' . $id . '/page/' . $this->arrParam['page']);											
+												$isHot = $this->cmsIconButton('Active', $this->imgUrl . '/icon/active.png',$linkIsHot);
+											}else{
+												$linkIsHot = $this->baseUrl($this->currentController . '/ishot/type/1/id/' . $id . '/page/' . $this->arrParam['page']);
+												$isHot = $this->cmsIconButton('INactive', $this->imgUrl . '/icon/inactive.png',$linkIsHot);
+											}	
+
+
+											
+											$order 			= $this->formText('order[' . $val['id'] . ']' ,$val['order'],array('style'=>'width: 30px; text-align: center;'));
+											
+											$linkInfo		= $this->baseUrl($this->currentController . '/info/id/' . $id);											
+											$btnInfo		= $this->cmsIconButton('View Item',$this->imgUrl . '/icon_info.png',$linkInfo);
+											
+											$linkEdit		= $this->baseUrl($this->currentController . '/edit/id/' . $id);
+											$btnEdit		= $this->cmsIconButton('Edit Item',$this->imgUrl . '/icon_edit.png',$linkEdit);
+											
+											$linkDelete		= $this->baseUrl($this->currentController . '/delete/id/' . $id);
+											$btnDelete		= $this->cmsIconButton('Delete Item',$this->imgUrl . '/icon_del.png',$linkDelete);
+										
+											$strIconButton	= $btnInfo . ' ' . $btnEdit . ' ' . $btnDelete;
+											
+											$cid			= $this->formCheckbox('cid[]',$val['id']);
+									?>
+                                    <tr class="even">						
+                                        <td align="center"><?php echo $cid;?></td>
+                                        <td align="center"><?php echo $image;?></td>
+                                        <td align="left"><h2><?php echo $title;?></h2></td>
+                                                                                
+                                        <td align="center"><?php echo $isAdult;?></td> 
+                                        <td align="center"><?php echo $isHot;?></td> 
+                                        <td align="center"><?php echo $status;?></td>
+
+                                        <td align="center"><?php echo $created;?></td>
+                                        <td align="center"><?php echo $site_name;?></td>
+                                        <td align="center"><?php echo $type;?></td>
+                                        
+                                        <td align="center"><?php echo $strIconButton;?></td>
+                                        <td align="center"><?php echo $id;?></td>
+                                    </tr>
+                                    <?php 
+										}
+										
+                                    ?>
+                                    <!-- BEGIN: PAGINATION (FOOT) -->
+                                    <tfoot>
+                                        <tr>
+                                            <td colspan="9">
+                                                <div class="container">
+                                                    <div class="pagination">
+                                                        <?php 
+                                                        	$currentUrl = $this->baseUrl($this->currentController . '/index');
+                                                        	echo $this->paginationControl($this->panigator,'Sliding','pagination.phtml',array('currentUrl'=>$currentUrl));
+                                                        	
+                                                        	// display items per page
+                                                        	$linkSlbPagging = $this->baseUrl($this->currentController . '/filter/type/pagging');
+                                                        	$options = array(5=>'5',
+                                                        					10=>'10',
+                                                        					20=>'20',
+                                                        					30=>'30',
+                                                        					50=>'50',
+                                                        					100=>'100',
+                                                        					200=>'200');
+                                                        	if($ssFilter['pagging']=='')
+                                                        		$ssFilter['pagging']=20;
+															$numPerPage = $this->formSelect('pagging',$ssFilter['pagging'],
+																							array('onchange'=>"OnSubmitForm('" . $linkSlbPagging . "')"),
+																							$options);
+															echo 'Items per page:'.$numPerPage;
+                                                        ?>
+                                                        <div class="limit"></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>					
+                                    </tfoot>				<!-- END: PAGINATION (FOOT) -->
+                                </table>
+                                <!-- Area 4: In du lieu lay tu database - End -->
+
+                                <!-- END: ELEMENT BOX -->	
+                              <div class="clr"></div>
+                            </div>
+                            <div class="b">
+                                <div class="b">
+                                    <div class="b"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: 	CONTENT -->
+                    </form>

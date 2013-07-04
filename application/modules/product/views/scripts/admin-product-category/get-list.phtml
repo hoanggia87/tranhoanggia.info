@@ -1,0 +1,94 @@
+<!-- list -->
+<table class="table table-striped tooltipsample listCategory">
+    <colgroup>
+        <col class="con0" />
+        <col class="con1" />
+        
+    </colgroup>
+   
+    <tbody>
+
+        <?php 
+            //tạo so de order
+            $arrOrder=array();
+
+            foreach($this->Items as $key => $val){
+                $id             = $val['id'];
+                //$name             = $val['name'];
+                
+                //ve category dang cay
+                //$padding = '';
+                //$gach='&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;';
+                $text='';
+                if($val['level'] == 1){
+                    $name =  $val['name'];
+                    
+                }else{
+                    //$padding = 'padding-left: ' . $info['level'] * 30 . 'px';
+                    //for($i=1;$i<$val['level'];$i++)
+                    //    $text.=$gach;
+                    $name = $val['name'];
+                   
+                }
+
+                $classDisabled='';
+                if($val['status']==0)
+                    $classDisabled='disabled';
+                //$name = '<div class="div" style="' . $padding . '">' . $name . '</div>';
+                $name = '<div class="name '.$classDisabled.'">' . $name . '</div>';
+                
+                
+                $status         = $val['status'];
+                if($status == 1){   
+                    $link = $this->baseUrl($this->currentController . '/status/type/0/id/' . $id);
+                    $status = $this->cmsIconButton('Ẩn `'.$val['name'].'`','icon-eye-open',$link,'hide');
+                }else{
+                    $link = $this->baseUrl($this->currentController . '/status/type/1/id/' . $id);
+                    $status = $this->cmsIconButton('Hiện `'.$val['name'].'`',  'icon-eye-close',$link,'show');
+                }
+                
+
+                $link = $this->baseUrl($this->currentController . '/sort/type/-1/id/' . $id);
+                $orderUp = $this->cmsIconButton('Đưa `'.$val['name'].'` lên trên',  'icon-arrow-up',$link,'up');
+
+                $link = $this->baseUrl($this->currentController . '/sort/type/1/id/' . $id);
+                $orderDown = $this->cmsIconButton('Đẩy `'.$val['name'].'` xuống dưới',  'icon-arrow-down',$link,'down');
+                
+                $link = $this->baseUrl($this->currentController . '/edit/id/' . $id);
+                $edit = $this->cmsIconButton('Sửa `'.$val['name'].'`',  'icon-edit',$link,'edit');
+
+                $link = $this->baseUrl($this->currentController . '/delete/id/' . $id);
+                $delete = $this->cmsIconButton('Xóa `'.$val['name'].'`',  'icon-trash',$link,'delete');
+               
+                    $strIconButton  ='
+                    '.$edit.'
+                    '.$status.'
+                    '.$orderUp.'
+                    '.$orderDown.'
+                    '.$delete;    
+                
+                
+                //vị trí thứ tự hiện t
+                $orderPos=$arrOrder[$val['level']][$val['parents']]+=1;
+                
+                $cid = $this->formCheckbox('cid[]',$id);
+        ?>
+        <tr iid="<?php echo $id;?>" level="<?php echo $val['level'];?>" order="<?php echo $orderPos;?>" pid="<?php echo $val['parents'];?>" class="level_<?php echo $val['level'];?>">                       
+            
+           
+                        <td><?php echo $name;?></td>
+                        <td><?php echo $strIconButton;?></td>
+            
+            
+            
+        </tr>
+        <?php 
+            }
+        ?>
+
+        
+    </tbody>
+    
+</table>
+       
+<!-- list end -->   

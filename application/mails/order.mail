@@ -1,0 +1,50 @@
+<h2 style="color:#008000">ĐƠN ĐẶT HÀNG THÀNH CÔNG</h2>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Đơn đặt hàng thành công</title>
+<style>
+body{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:12px;
+	margin-top:2px;
+}	
+</style>
+</head>
+<body>
+<h3 style="color:#ff7700">Thông tin khách hàng :</h3>
+<br/>
+<strong>Họ và tên: </strong>{0}
+<br/><br/>
+<strong>Email: </strong>{1}
+<br/><br/>
+<strong>Di động: </strong>{2}
+<br/><br/>
+<strong>Địa chỉ: </strong>{3}
+<br/><br/>
+<strong>Ghi Chú: </strong>{4}
+<br/><br/>
+<h3 style="color:#ff7700">Nội dung đơn hàng :</h3>
+<br>
+<strong>Mã đơn hàng: </strong>{5}
+<br>
+<br>
+======================================================================================<br>
+{6}
+
+<br>
+======================================================================================<br>
+Thời gian thực hiện đơn hàng mất 1-2 ngày và chúng tôi sẽ tiến hành giao hàng cho quý khách trong vòng <br>
+2-3 ngày làm việc sắp tới.<br><br>
+Nếu quý khách có bất kỳ thắc mắc nào, xin đừng ngần ngại liên hệ với chúng tôi qua theo thông tin  <br>
+Đức Nguyên : 0907 0502 88 - hotro@unicityvietnam.vn. <br><br>
+Cám ơn quý khách đã mua sắm tại <b><a href="http://www.UnicityVietNam.vn">www.UnicityVietNam.vn</a></b>. <br>
+Hy Vọng sản phẩm và sự phục vụ chuyên nghiệp của chúng tôi sẽ giúp cho quý khách hàng hài lòng.<br><br>
+
+Trân trọng.
+<br><br>
+<b>Công ty Unicity Việt Nam - <a href="http://www.UnicityVietNam.vn">www.UnicityVietNam.vn</a></b><br>
+======================================================================================<br>
+<i>Xin vui lòng đừng trả lời email này.</i>
+</body>
+</html>

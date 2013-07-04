@@ -1,0 +1,190 @@
+<?php
+    //var_dump($this->lichchieuphim);
+    $strDay = '<select name="day" id="day">';
+    for($i=1;$i<=31;$i++)
+    {
+        if($i == date('d'))
+        {
+            $strSelected ='selected="selected"';
+        }
+        else
+        {
+            $strSelected ='';
+        }
+        if($i<10)
+        {
+            $ii = '0'.$i;
+        }
+        else
+        {
+            $ii = $i;
+        }
+        $strDay.='<option '.$strSelected.' value="'.$ii.'">'.$ii.'</option>';
+    }
+    $strDay .= '</select>';
+    $strMonth = '<select name="month" id="month">';
+    for($i=1;$i<=12;$i++)
+    {
+        if($i == date('m'))
+        {
+            $strSelected ='selected="selected"';
+        }
+        else
+        {
+            $strSelected ='';
+        }
+        if($i<10)
+        {
+            $ii = '0'.$i;
+        }
+        else
+        {
+            $ii = $i;
+        }
+        $strMonth.='<option '.$strSelected.' value="'.$ii.'">'.$ii.'</option>';
+    }
+    $strMonth .= '</select>';
+    
+    $strYear = '<select name="year" id="year">';
+    for($i=date('Y');$i<=2015;$i++)
+    {
+        if($i == date('Y'))
+        {
+            $strSelected ='selected="selected"';
+        }
+        else
+        {
+            $strSelected ='';
+        }
+        $strYear.='<option '.$strSelected.' value="'.$i.'">'.$i.'</option>';
+    }
+    $strYear .= '</select>';
+    $strLocation = '<select name="location" id="location">';
+    foreach($this->listLocation as $key => $value)
+    {
+        if($key == 'tphcm')
+        {
+            $strSelected ='selected="selected"';
+        }
+        else
+        {
+            $strSelected ='';
+        }
+        $strLocation.='<option '.$strSelected.' value="'.$key.'">'.$value.'</option>';
+    }
+    $strLocation .= '</select>';
+?>
+<div id="category">
+    <div class="wrapper">
+        <div id="cat-content">
+            <div id="cat-left">
+                <div id="category-detail">
+                    <div id="chanel-box">
+                        <div class="nav_link">
+                            <h2><span style="float: left;margin-right: 5px;"><a href="<?php echo DOMAIN_NAME; ?>" title="">TRANG CHỦ</a></span> <span style="float: left;margin-right: 6px; margin-top:1px"><img src="<?php echo DOMAIN_NAME;?>public/templates/public/online/images/breadcrumb-right.png" /></span> <span style="float: left;">Lịch chiếu phim</span></h2>
+                        </div>
+                        <div class="category-detail">
+                            <div class="clr">
+                                <div class="truyenhinh-title" style="float: left;">
+                                    <div style="float: left; padding-right:10px;"><strong>Khuc vực: </strong> <?php echo $strLocation;?></div>
+                                    <div style="float: left; padding-right:10px;"><strong>Ngày:</strong> <?php echo $strDay;?></div>
+                                    <div style="float: left; padding-right:10px;"><strong>Tháng:</strong> <?php echo $strMonth;?></div>
+                                    <div style="float: left; padding-right:10px;"><strong>Năm:</strong> <?php echo $strYear;?></div>
+                                    <div style="float: left;"><strong><a style="color: red;" id="showlist" onclick="return false;">XEM LỊCH CHIẾU</a></strong></div>
+                                </div>
+                                <div style="float: right; padding-left:4px;"><strong> Nguồn: </strong> <a href="http://vietbao.vn/vn/lich-chieu-phim" target="_blank">Việt báo</a></div>
+                            </div>
+                            <div class="clr"></div>
+                            <div id="chanel-content">
+                                <div id="ajax-flag" style="display: none;"><img src="<?php echo $this->baseUrl('public/templates/public/online/images/loading.gif') ?>" /></div>
+                                <div id="ha-noi" style="display: none;"><?php echo $this->lichchieuphim['ha-noi'];?></div>
+                                <div id="tphcm" ><?php echo $this->lichchieuphim['tphcm'];?></div>
+                                <div id="hai-phong" style="display: none;"><?php echo $this->lichchieuphim['hai-phong'];?></div>
+                                <div id="da-nang" style="display: none;"><?php echo $this->lichchieuphim['da-nang'];?></div>
+                            </div>
+                            <script>
+                                $(document).ready(function() 
+                                {
+                                    var _curentLocation = 'tphcm';
+                                    var n = new Date();
+                                    var month = n.getMonth()+1;
+                                    var day = n.getDate();
+                                    var _curentDate = (day<10 ? '0' : '') + day + '-' + (month<10 ? '0' : '') + month + '-' + n.getFullYear();
+                                    $('#showlist').click(function()
+                                    {
+                                        var day = $('select[name=day] option:selected').val();
+                                        var month = $('select[name=month] option:selected').val();
+                                        var year = $('select[name=year] option:selected').val();
+                                        var date = day + '-' + month + '-' + year;
+                                        var location = $('select[name=location] option:selected').val();
+                                        if(date == _curentDate)
+                                        {
+                                            if(location == _curentLocation)
+                                            {
+                                                return;
+                                            }
+                                            else
+                                            {
+                                                $('#' + _curentLocation).hide();
+                                                $('#' + location).fadeIn(1000);
+                                                _curentLocation = location;
+                                                _curentDate = date;
+                                            }
+                                            return;
+                                        }
+                                        $('#ajax-flag').show();
+                                        $('#' + _curentLocation).hide();
+                                        $.ajax({
+                                              type: 'POST',
+                                              url:BASE_URL+'service/lichchieuphim/getlichchieuphim',
+                                              data: {date:date},
+                                              dataType:'json',
+                                              success:function(data){ 
+                                                if(parseInt(data.rs) == 1)
+                                                {
+                                                    //alert(data.hanoi);
+                                                    $('#ha-noi').html(data.hanoi);
+                                                    $('#tphcm').html(data.tphcm);
+                                                    $('#da-nang').html(data.danang);
+                                                    $('#hai-phong').html(data.haiphong);
+                                                    $('#chanel-content table').attr('cellpadding','0');
+                                                    $('#chanel-content table').attr('cellspacing','0');
+                                                    $('#chanel-content table').attr('border','0');
+                                                    $('#chanel-content table').attr('width','100%');
+                                                    $('#' + _curentLocation).hide();
+                                                    $('#' + location).fadeIn(1000);
+                                                    _curentLocation = location;
+                                                    _curentDate = date;
+                                                    $('#ajax-flag').hide(); 
+                                                    return false;            
+                                                }
+                                                else
+                                                {
+                                                    
+                                                }
+                                              }   
+                                            });        
+                                    });
+                                    //alert(_curentDate);
+                                    //alert($('#chanel-content table tr td:eq(2)').html());
+                                    $('#chanel-content table').attr('cellpadding','0');
+                                    $('#chanel-content table').attr('cellspacing','0');
+                                    $('#chanel-content table').attr('border','0');
+                                    $('#chanel-content table').attr('width','100%');
+                                    /*$('#chanel-content table').addClass('ta1');
+                                    $('#chanel-content table th').addClass('pt_title');
+                                    $('#chanel-content table tr:even').addClass('pt_mau2');*/
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="cat-right">
+                <?php $this->ShowMenuRight($this);?>
+                <?php $this->ShowTinPhim($this);?>
+                <?php $this->ShowCopyRight($this);?>
+            </div>
+        </div>
+    </div>
+</div>

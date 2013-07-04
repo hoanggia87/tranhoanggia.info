@@ -1,0 +1,124 @@
+<?php 
+	$user_name 		= $this->Item['user_name'];
+	$user_avatar	= $this->Item['user_avatar'];
+	$user_avatar_image	= '<img src="'.PUBLIC_URL.'/files/user_avatar/thumb/'.$this->Item['user_avatar'].'">';
+	$email			= $this->Item['email'];
+	
+	$first_name 	= $this->Item['first_name'];
+	$last_name 		= $this->Item['last_name'];
+	$birthday 		= $this->Item['birthday'];
+	
+	$register_date 	= $this->Item['register_date'];
+	$register_ip 	= $this->Item['register_ip'];
+	$visited_date 	= $this->Item['visited_date'];
+	$visited_ip 	= $this->Item['visited_ip'];
+	
+	$status 		= $this->Item['status'];
+	$sign	 		= $this->Item['sign'];
+
+?>
+<form name="appForm" method="post" action="">
+
+
+
+                        <?php echo $this->render('admin-user/toolbar/index.php')?>
+                        <div class="clr"></div>
+                         <?php echo $this->render('admin-user/sublink/index.php')?>
+
+                        <!-- BEGIN: CONTENT -->
+                        <div id="element-box">
+                            <div class="t">
+                                <div class="t">
+                                    <div class="t"></div>
+                                </div>
+                            </div>
+                            <div class="m">
+                                <!-- BEGIN: ELEMENT BOX -->
+						<div id="adminfieldset">
+                             <div class="adminheader">Item Detail</div>
+								
+								<div id="row">
+                                    <div class="label">User name:</div>
+                                    <?php echo $user_name;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Avatar:</div>
+                                    <?php echo $user_avatar.'<br />'.$user_avatar_image;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Email:</div>
+                                    <?php echo $email;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">First name:</div>
+                                    <?php echo $first_name;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Last name:</div>
+                                    <?php echo $last_name;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Birthday:</div>
+                                    <?php echo $birthday;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Register Date:</div>
+                                    <?php echo $register_date;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Register Ip:</div>
+                                    <?php echo $register_ip;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Visited Date:</div>
+                                    <?php echo $visited_date;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Visited Ip:</div>
+                                    <?php echo $visited_ip;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Status:</div>
+                                    <?php echo $status;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+                                <div id="row">
+                                    <div class="label">Sign:</div>
+                                    <?php echo $sign;?>			
+                                </div>
+                                <div class="clr"></div>
+                                
+							</div>
+							
+                                <!-- END: ELEMENT BOX -->	
+                              <div class="clr"></div>
+                            </div>
+                            <div class="b">
+                                <div class="b">
+                                    <div class="b"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END: 	CONTENT -->
+                    </form>

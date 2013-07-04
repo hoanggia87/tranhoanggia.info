@@ -1,0 +1,70 @@
+<!-- content -->
+    <div id="content">
+    <!-- left -->
+    	<div id="left">
+        	<!-- menu header -->
+            <?php echo $this->render('index/html/menutop.php')?>
+            <!-- menu header end -->
+            <!-- content main -->
+            
+            
+<!-- gallery -->
+<div class="gallery">
+		<ul class="images">
+                                    
+<?php 
+	foreach($this->listPhoto as $key => $val){
+		$id 			= $val['id'];
+		$title			= $val['title'];
+		$thumb_image_200x200	= PUBLIC_URL.'/files/images/thumb_images_200x200/'.$val['full_image'];
+		$thumb_image_500x500	= PUBLIC_URL.'/files/images/thumb_images_500x500/'.$val['full_image'];
+		$created 		= $val['created'];
+		$cat_name 		= $val['cat_name'];
+		
+
+?>
+                                    
+                                    
+                                    <li class="image" style="float: left; list-style:none;">
+                                    <div style="float: left;width: 250px;height: 200px; text-align:center; margin: 5px;">
+				
+				
+				<div style="width: 100%;height: 200px;vertical-align: middle;margin-top: 5px;margin-bottom: 5px;">
+				<a rel="lightbox-mygallery" href="<?php echo $thumb_image_500x500;?>" title="<?php echo $title;?>">
+					
+					<img src="<?php echo $thumb_image_200x200;?>" border="0" >
+					
+				</a>
+				</div>
+			
+			</div>
+		</li>
+		
+                                    
+                                    <?php 
+	}
+	
+                                    ?>
+                                    </ul>
+</div>
+                                    
+<!-- gallery end -->            
+            
+<?php 
+//phan trang
+echo '<div style="margin-top:20px;float:right;">';
+$currentUrl = $this->baseUrl($this->currentController . '/list/cat_id/'.$this->arrParam['cat_id']);
+echo $this->paginationControl($this->panigator,'Sliding','paginationfront.phtml',array('currentUrl'=>$currentUrl));
+echo '</div>';
+?>
+<!-- content main end -->
+            
+        </div>
+            <!-- left end-->
+            <!-- right -->
+        <div id="right">
+        	 <?php echo $this->render('index/html/category.php')?>   
+        </div>
+            <!-- right end -->
+    </div>
+    <!-- content end -->

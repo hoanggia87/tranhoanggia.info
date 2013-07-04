@@ -1,0 +1,110 @@
+<?php
+    $auth = Zend_Auth::getInstance();
+    $infoAuth = $auth->getIdentity();
+    //echo $infoAuth->user_id;
+    $content		= $this->cmsEditor('content','',$width = '100%',$height = 300);
+?>
+<div class="clear"></div>
+<div id="wrapper">
+    <div id="content">
+        <div id="content-left">
+            <div id="left-content">
+                <div id="scriptolution-soft-post" class="scriptolution-soft-box static">
+                    <?php
+                        if($infoAuth->user_id)
+                        {
+                    ?>
+                    <div class="head">
+                        <ul class="switch">
+                        	<li class="tab_photo"><a class="photo" href="<?php echo $this->baseUrl('dang-anh.shock')?>">Ảnh</a></li>
+                        	<li class="tab_video"><a class="video" href="<?php echo $this->baseUrl('dang-video.shock')?>">Video</a></li>
+        					<li class="tab_blog current"><a class="blog" href="<?php echo $this->baseUrl('dang-truyen-cuoi.shock')?>">Truyện cười</a></li>
+        					<li class="tab_tamsu"><a class="blog" href="<?php echo $this->baseUrl('dang-tam-su.shock')?>">Tâm sự</a></li>
+        					<li class="tab_tinnong"><a class="blog" href="<?php echo $this->baseUrl('dang-bao-hay.shock')?>">Báo hay</a></li>
+                        </ul>
+                    </div>
+                    <?php }?>
+                    <?php
+                        if($this->errors)
+                        {
+                            foreach($this->errors as $v)
+                            {
+                                echo $v;
+                            }
+                        }
+                        if(!$infoAuth->user_id)
+                        {
+                            echo '<Br><br><br><p class="form-message error">VUI LÒNG ĐĂNG NHẬP TRƯỚC KHI ĐĂNG TRUYỆN CƯỜI. BẤM <a style="color:white; text-decoration:underline" href="'.$this->baseUrl('dang-nhap.shock').'">VÀO ĐÂY</a> ĐỂ ĐĂNG NHẬP</p><br><br><br>';
+                        }
+                        else
+                        {
+                    ?>
+                    <div class="clear"></div>
+                    <div class="content form_photo">
+                        <form id="form-scriptolution-soft-post-image" class="modal" action="#" enctype="multipart/form-data" method="post">
+                            <h3>Đăng truyện cười</h3>
+                            <div class="field">
+                                <label>
+                                    <h4>Tiêu đề truyện  <span style="color: red;">(*)</span></h4>
+                                    <input id="post_title" type="text" class="text tipped" name="title" maxlength="120" value="">
+                                    <p class="info">Tiêu đề hay sẽ giúp nhiều thành viên sẽ câu được lượt xem và like đấy ^_^.</p>
+                                </label>
+                            </div>
+                            <div class="field">
+                                <label>
+                                    <h4>Nội dung  <span style="color: red;">(*)</span></h4>
+                                    <?php echo $content; ?>
+                                </label>
+                            </div>
+                            <div class="field">
+                                <label>
+                                    <h4>Nguồn</h4>
+                                    <input type="text" class="text tipped" name="source" value="" maxlength="300">
+                                    <p class="info">Hãy tông trọng sự sáng tạo của tác giả nào.</p>
+                                </label>                    
+                            </div>
+                            <hr>
+                            <div class="field checkbox">
+                            	<label for="submit-nsfw">
+                            	<input id="submit-nsfw" type="checkbox" class="checkbox" name="is_adult" value="1">Bài này dành cho người trên 18 tuổi</label>
+                            </div>                
+                    </div>
+                    <div class="actions">
+                        <ul>
+                            <!--li class="loading-btn" style="visibility:hidden"><a class="button loading"></a></li>
+                            <li class="form-btn"><a class="cancel" href="/">Huỷ</a></li>
+                            <li class="form-btn"><a class="button send" id="ekle">Đăng hình</a></li-->
+                            <li style="float: right;"><input class="buttons" type="submit" name="submit" value="Đăng truyện cười" /></li>
+                            <li style="float: right;margin-right:10px;"><input class="buttons" type="reset" name="reset" value="Hủy" /></li>
+                        </ul>
+                    </div>
+        			</form>
+        			<script type="text/javascript">
+                    /*$('input').each(function()
+        			{
+                    	$(this).focus(function()
+        				{
+                    		$(this ).next('.info').css('visibility','visible');
+                    	})
+                    	$(this).blur(function()
+        				{
+                    		$(this).next('.info').css('visibility','hidden');
+                    	})
+                    });
+                    $('#ekle').click(function(){
+                    	$('#form-scriptolution-soft-post-image').submit();
+                    });*/
+                    </script>
+                    <?php
+                        }
+                    ?>
+                </div>
+            </div>
+        </div>
+        <div id="content-right">
+            <div id="side-bar">
+                <?php echo $this->ShowSidebar($this,'noiquy');?>
+            </div>    
+        </div>
+    </div>
+</div>

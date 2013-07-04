@@ -1,0 +1,217 @@
+@charset "utf-8";
+
+/* CSS Document */ /*--------- adminform ---------------------*/
+#adminfieldset {
+	margin: 10px 0 20px;
+	padding: 20px 5px;
+	width: 98%;
+	border: 1px solid #CCCCCC;
+}
+
+#adminfieldset .adminheader {
+	background: #FFF;
+	margin: -40px 0 0 3px;
+	padding: 10px 20px;
+	position: absolute;
+	color: #011FFD;
+	font-weight: bold;
+}
+
+#adminfieldset #row {
+	/*border-bottom: solid 1px #e9e9e9;*/
+	padding: 2px;
+	/*(padding-bottom: 3px;*/
+	min-height: 24px;
+	
+}
+#adminfieldset #row .label {
+	background-color: #f6f6f6;
+	color: #323232;
+	font-weight: bold;
+	width: 155px;
+	padding: 5px;
+	margin: 0 4px;
+	float: left;
+	text-align: right;
+	border-bottom: 1px solid #e9e9e9;
+	border-right: 1px solid #e9e9e9;
+}
+#adminfieldset #row .title{
+	font-weight: bold;
+	color: #FF0000;
+}
+#adminfieldset #row .input {
+	background-color: #FFFFFF;
+	margin-left: 170px;
+	padding: 5px 5px;
+	border-left: solid 1px #e9e9e9;
+	color: #323232;
+	height: 17px;
+}
+.info{
+	padding-top:4px;
+	margin: 0 0 6px 173px;
+}
+.height100{
+	height: 100px;
+}
+.height150{
+	height: 150px;
+}
+.height300{
+	height: 290px;
+}
+.height400{
+	height: 390px;
+}
+.txtlong{
+	width: 400px;height: 15px;
+}
+.txtmedium{
+	width: 250px;height: 15px;
+}
+.txtshort{
+	width: 100px;height: 15px;
+}
+.medium{
+	width: 49.5%
+}
+.right{
+	float: right;
+}
+.left{
+	float: left;
+}
+.radioclass, .checkboxclass{
+	height: 19px;
+}
+.selectboxclass{
+	min-width: 120px;
+	height: 21px;
+	
+}
+.fileupload {
+	width: 100px;
+	height: 22px;
+}
+.textareabig{
+	width: 500px;
+	height: 157px;
+}
+.textareasmall {
+	width: 500px;
+	height: 107px;
+}
+
+.listboxclass {
+	width: 250px;
+	height: 110px;
+	margin-bottom: 1px;
+}
+
+.editorbig {
+	width: 200px;
+	height: 300;
+}
+
+.editorsmall {
+	width: 200px;
+	height: 200;
+}
+
+
+
+/*---------------showButton-------------*/
+#showButton {
+	margin: 5px;
+	padding: 5px;
+}
+
+#showButton-right {
+	text-align: right;
+	margin-left: 2px;
+}
+
+/*----------errors------------*/
+#errors{
+	border: solid 1px #ff8383;	
+	padding: 7px;
+	background-color: #ffcaca;
+	font-size: 12px;
+	margin-bottom: 5px;
+}
+#errors ul{
+	padding: 0px;
+	margin: 0px;
+}
+
+#errors li{
+	list-style-position:inside;
+}
+
+/*-------success---------*/
+#success{
+	border: solid 1px #04a300;	
+	padding: 5px 10px;
+	background-color: #a3ffa1;	
+	margin-bottom: 5px;
+	font-size: 12px;
+}
+
+#ucp{
+	margin: 10px 0px;
+}
+#ucp li{
+	float: left;
+	width: 25%;
+	text-align: center;
+	list-style-type: none;
+	padding: 5px 0px;
+}
+
+/*-----------------------------*/
+#u-main{
+	margin-right: 260px; 
+}
+
+#u-right{
+	width: 225px; 
+	
+	float: right; 
+	min-height: 250px; 
+	padding: 0px 10px;
+}
+
+#u-right .block-right{
+	
+}
+
+
+#u-right .block-right .block-header{	
+	background: #f6f6f6;
+	padding:1px;
+	border: solid 1px #cccccc;
+}
+#u-right .block-header-icon{
+	height: 24px; margin-left: 6px;
+}
+
+#u-right .block-header-text{
+	padding-left: 30px; padding-top:4px; color: #404040; font-weight: bold;
+}
+
+#u-right .block-right-content{
+	padding: 10px 7px;
+	border: solid 1px #cccccc;
+	line-height: 18px;
+	border-top: 0px;
+	font-family: tahoma, arial;
+	font-size: 11px;
+	margin-bottom: 8px;
+}
+
+#u-right .spanview{
+	font-style: italic;
+	font-size: 10px;
+	color: #939393;
+}

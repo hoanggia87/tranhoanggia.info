@@ -1,0 +1,64 @@
+<?php
+/*echo 'This is view of Paginator';
+echo $this->currentUrl;*/
+
+	$linkStart 		= $this->currentUrl . '/page/' . $this->first;
+	
+	$linkPrevious = '#';
+	if(isset($this->previous)){
+		$linkPrevious 	= $this->currentUrl . '/page/' . $this->previous;
+	}
+	$linkNext = '#';
+	if(isset($this->next)){
+		$linkNext 		= $this->currentUrl . '/page/' . $this->next;
+	}
+	
+	$linkEnd 		= $this->currentUrl . '/page/' . $this->last;
+	
+	$strPage  = '';
+	foreach ($this->pagesInRange as $key){
+		if($this->current == $key){
+			$strPage .= '<span>' . $key .'</span>';
+		}else{
+			$linkPage = $this->currentUrl . '/page/' . $key;
+			$strPage .= '<a href="' . $linkPage . '">' . $key .'</a>'; 
+		}
+	}
+
+	//$page = 'trang ' . $this->current .' / ' . $this->last;
+?>
+<div style="width: 100%;clear: both;"></div>
+<div class="button2-right">
+	<div class="start">		
+		<a href="<?php echo $linkStart;?>" title="Start">đầu</a>		
+	</div>
+</div>
+
+<div class="button2-right" >
+	<div class="prev">
+		<a href="<?php echo $linkPrevious;?>" title="Prev" ></a>
+	</div>
+</div>
+
+<div class="button2-left">
+	<div class="page">
+		<?php echo $strPage;?>
+	
+	</div>
+</div>
+
+<div class="button2-left">
+	<div class="end">
+		<a href="<?php echo $linkNext;?>" title="Next" ></a>
+	</div>
+</div>
+
+<div class="button2-left">
+	<div class="end">
+		<a href="<?php echo $linkEnd;?>" title="End" >cuối</a>
+	</div>
+</div>
+<!--<div class="limit" style="margin-top: 3px; font-weight: bold;">
+	<?php echo $page;?>
+</div>
+-->

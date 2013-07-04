@@ -1,0 +1,74 @@
+<?php
+
+
+$hotItem='';
+
+$classTemp='a';
+foreach ($this->arrListHotSite as $key => $value) {
+	$hotItem.='<div class="ui-block ui-block-'.$classTemp.'"><a href="'.$value['link'].'" target="_blank"><div class="ui-bar ui-bar-d"><img width="45" height="45" title="" src="'.DOMAIN_NAME.'public/files/weblink/logo/'.$value['full_image'].'"><span>'.$value['title'].'</span></div></a></div>';
+	if($classTemp=='a')
+		$classTemp='b';
+	else
+		$classTemp='a';
+}
+$hotItem.='<div class="ui-block ui-block-'.$classTemp.'"><div class="ui-bar ui-bar-d"><a href="#nav-panel" data-icon="view-more" data-iconpos="notext">Xem thêm</a></div></div>';
+?>
+
+<div data-role="page" class="jqm-demos ui-responsive-panel" id="panel-fixed-page1">
+
+    <div data-role="header"   data-position="fixed" data-theme="c" >
+        <h1>Royal.com</h1>
+        <a href="#nav-panel" data-icon="bars" data-iconpos="notext">Menu</a>
+    </div><!-- /header -->
+
+    <div data-role="content" class="jqm-content">
+		<div class="ui-grid-a grid-top">
+		    <?php echo $hotItem;?>
+		    
+		</div><!-- /grid-a -->
+
+		<div class="ui-grid-b grid-bottom">
+		    <div class="ui-block-a">	    	
+			    	<a href="<?php echo $this->baseUrl('thoi-tiet.html');?>" target="_blank">
+						<img class="icon_tienich" width="43" height="28" title="" src="http://stc.laban.vn/mobile/images/thoi_tiet_1.1.png">
+						<p>Thời tiết</p>
+					</a>			
+			</div>
+		    <div class="ui-block-b">
+		    	<a href="/ty-gia">
+				<img class="icon_tienich" width="16" height="28" title="" src="http://stc.laban.vn/mobile/images/money_1.1.png">
+				<p>Tỷ giá</p>
+				</a>
+		    </div>
+		    <div class="ui-block-c">
+		    	<a class="r" href="/gia-vang">
+				<img class="icon_tienich" width="36" height="28" title="" src="http://stc.laban.vn/mobile/images/gold_1.1.png">
+				<p>Giá vàng</p>
+				</a>
+		    </div>
+		    <div class="ui-block-a">
+		    	<a href="/lich-truyen-hinh">
+				<img class="icon_tienich" width="25" height="28" title="" src="http://stc.laban.vn/mobile/images/tv_1.1.png">
+				<p>Lịch truyền hình</p>
+				</a>
+		    </div>
+		    <div class="ui-block-b">
+		    	<a href="/lich-phim-rap">
+				<img class="icon_tienich" width="28" height="28" title="" src="http://stc.laban.vn/mobile/images/movie_1.1.png">
+				<p>Lịch phim rạp</p>
+				</a>
+		    </div>	    
+		    <div class="ui-block-c">
+		    	<a href="/kqsx">
+				<img class="icon_tienich" width="31" height="28" title="" src="http://stc.laban.vn/mobile/images/ticket_1.1.png">
+				<p>KQ xổ số</p>
+				</a>
+		    </div>	
+		</div><!-- /grid-a -->
+
+    </div><!-- /content -->
+
+    <?php echo $this->showCategory($this);?>
+	
+
+</div><!-- /page -->

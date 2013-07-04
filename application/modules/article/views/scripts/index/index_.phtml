@@ -1,0 +1,96 @@
+<?php 
+$userInfo = $this->arrUserInfo;
+
+$html='';
+
+//$showFb = Block_ShowFb::_();
+
+
+
+foreach ($this->listArticle as $key => $value) {
+
+    $rw=new Zendvn_View_Helper_CmsRewriteLink();
+    $info['title']=$rw->noSign(trim($value['title']));
+    $info['id']=$value['id'];
+    $linkDetail   = $this->serverUrl($this->url($info,'article-index-detail'));
+
+
+    switch ($value['type']) {
+        case 'image':
+            $image=PUBLIC_URL.'/files/article/images/'.$value['image'];
+            $contentWrap='
+                <div class="img-wrap">
+                    <a href="'.$linkDetail.'" target="_blank">
+                        <img class="shockvl" src="'.$image.'" alt="'.$value['title'].'" />
+                    </a>
+                </div>
+            ';
+            break;
+        case 'video':
+            $image=$value['image'];
+            $contentWrap='
+                <div class="img-wrap">
+                    <a href="'.$linkDetail.'" target="_blank">
+                        <img class="shockvl" src="'.$image.'" alt="'.$value['title'].'" />
+                        <img class="videoPlay" src="http://www.shockvl.com/public/templates/public/shockvl/images/button_play_red.png" alt="'.$value['title'].'" />
+                    </a>
+                </div>
+            ';
+            break;  
+        
+        default:
+            # code...
+            break;
+    }
+
+
+    $html.='
+    <div class="grid">
+        <div class="grid-left">
+            '.$contentWrap.'
+        </div>
+        <div class="grid-right">
+            <div class="info-entries">
+                <h1><a href="'.$linkDetail.'" target="_blank">'.$value['title'].'</a></h1>
+                <div class="uploader">Đăng bởi <a href="#">'.$userInfo[$value['user_id']]['full_name'].'</a> '.$value['create_date'].'</div>                               
+                <div class="sharing-box">
+                    <div class="sharing"> 
+                        '. $this->ShowFb(array('detail'=>$linkDetail),array('type'=>'like')).'
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+    ';
+
+    
+}
+?>
+
+<div id="wrapper">
+        <div id="content">
+            <div id="content-left">
+                <div id="left-content">
+                    <div id="entries-content">
+                        
+                        <?php echo $html;?>
+
+
+                        <?php 
+                        //CODE PHAN TRANG
+                            $currentUrl = $this->baseUrl($this->currentController . '/'.$this->arrParam['order']);
+                            echo $this->paginationControl($this->panigator,'Sliding','paginationfront.phtml',array('currentUrl'=>$currentUrl,'orderType'=>$this->arrParam['order']));                            
+                        ?>
+                        <div class="clear"></div>
+                    </div>                     
+                </div>
+            </div>
+            <div id="content-right">
+                <div id="side-bar">
+                    <?php echo $this->ShowSidebar($this,'');?>
+                </div>    
+            </div>
+        </div>
+    </div>
+

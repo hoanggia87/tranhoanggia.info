@@ -1,0 +1,69 @@
+<?php
+	$listLocation = $this->listLocation;
+    //echo count($listLocation);
+    $strAnotherCity = '';
+	$selectTinh='<label for="tinh"><strong>Thành phố</strong>: </label><select onChange="showCityXoso(this.value)" name="tinh" id="tinh">';
+	foreach ($this->listLocation as $k => $v) {
+		$selectTinh.='<option value="'.$k.'">'.$v.'</option>';	
+        $strAnotherCity .= '<li><a href="#" title="" onclick="changeCity(\''.$k.'\')">'.mb_strtoupper($listLocation[$k],'UTF-8').'</a></li>';	
+	}
+	$selectTinh.='</select>';
+
+	$xoso='';
+    $arrDefaultShow = array('1');
+	foreach ($this->xoso as $key => $value) 
+	{
+	    if(in_array($key,$arrDefaultShow))
+        {
+            $strShow ='';
+        }
+        else
+        {
+            $strShow ='style="display:none"';
+        }
+        $xoso .= '<div class="xoso-list-city" id="xoso-list-'.$key.'" '.$strShow.'>';
+        
+        
+        $strInfo .= '<span '.$strShow.' id="xoso-info-'.$key.'">KẾT QUẢ XỔ SỐ '. mb_strtoupper($listLocation[$key],'UTF-8').'</span>';
+        foreach($value as $k => $v)
+        {
+            $xoso.= $v;
+            
+        }
+        
+        $xoso .= '</div>';
+	}
+    //echo '<pre>';
+    //var_dump($this->listLocation);
+    //echo "</pre>";
+    //echo $thoitiet;
+?>
+<div id="category">
+    <div class="wrapper">
+        <div id="cat-content">
+            <div id="cat-left">
+                <div id="category-detail">
+                    <div id="xoso">
+                        <div class="nav_link">
+                            <h2><span style="float: left;margin-right: 5px;"><a href="<?php echo DOMAIN_NAME; ?>" title="">TRANG CHỦ</a></span> <span style="float: left;margin-right: 6px; margin-top:1px"><img src="<?php echo DOMAIN_NAME;?>public/templates/public/online/images/breadcrumb-right.png" /></span> <span style="float: left;">Kết quả xổ số</span></h2>
+                        </div>
+                        <div class="category-detail">
+                            <div class="clr">
+                                <div class="xoso-title" style="float: left;"><?php echo $strInfo;?></div>
+                                <div style="float: right; padding-top:10px; padding-left:4px;"><strong> - Nguồn: </strong> <a href="http://kqxs.123sms.vn/" target="_blank">Kết quả  xổ số</a></div>
+                                <div style="float: right; padding-top:10px;"><?php echo $selectTinh;?></div>
+                            </div>
+                            <div class="clr"></div>
+                            <?php echo $xoso;?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="cat-right">
+                <?php $this->ShowMenuRight($this);?>
+                <?php $this->ShowTinXoso($this);?>
+                <?php $this->ShowCopyRight($this);?>
+            </div>
+        </div>
+    </div>
+</div>

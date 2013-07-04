@@ -1,0 +1,235 @@
+<div class="mainwrapper">
+    
+    <!-- START OF LEFT PANEL -->
+    <div class="leftpanel">
+        <?php $this->adminMenu($this);?>
+    </div><!--mainleft-->
+    <!-- END OF LEFT PANEL -->
+    
+    <!-- START OF RIGHT PANEL -->
+    <div class="rightpanel">
+        <?php $this->adminHeaderpanel($this);?>
+        <?php $this->adminBreadcrumbwidget($this);?>
+
+
+        <div class="pagetitle">
+            <h1>Dashboard</h1> <span>This is a sample description for dashboard page...</span>
+        </div><!--pagetitle-->
+        
+        <div class="maincontent">
+            <div class="contentinner">
+
+                <div class="mediamgr">
+                    <div class="mediamgr_left">
+                        <div class="mediamgr_head">
+                            <ul class="mediamgr_menu">
+                                
+                                <li >
+                                    
+                                    <input id="file_upload" type="file" name="file_upload" />
+                                    
+                                </li>
+                                <li class="marginleft15 newfoldbtn"><a class="btn newfolder" title="Add New Folder"><span class="icon-folder-open"></span> Tạo Thư mục</a></li>
+                                <li class="marginleft5 trashbtn"><a class="btn trash" title="Trash"><span class="icon-trash"></span></a></li>
+                                
+                                <li class="marginleft15 filesearch">
+                                    <form>
+                                        <input type="text" id="filekeyword" class="filekeyword" placeholder="Search file here" />
+                                    </form>
+                                </li>
+                                
+                            </ul>
+                            <span class="clearall"></span>
+                        </div><!--mediamgr_head-->
+                        
+                        <div class="mediamgr_category">
+                            <ul>
+                                <li class="current"><a href="">All</a></li>
+                                <li><a href="">Images</a></li>
+                                <li><a href="">Video</a></li>
+                                <li><a href="">Audio</a></li>
+                                <li><a href="">Documents</a></li>
+                                <li class="right"><span class="pagenuminfo">Showing 1 - 20 of 69</span></li>
+                            </ul>
+                        </div><!--mediamgr_category-->
+                        
+                        <div class="mediamgr_content">
+                            
+                        <small><em>Tips: Hold Control key to select multiple items (Windows only).</em></small>
+                            
+                        <br /><br />
+                            <div  id="ajax-listfile">
+                               
+                                   <!--content ajax list file-->                                
+                              
+                            </div>
+                            
+                            <br class="clearall" />
+                            
+                        </div><!--mediamgr_content-->
+                        
+                    </div><!--mediamgr_left -->
+                    
+                    <div class="mediamgr_right">
+                        <div class="mediamgr_rightinner">
+                            <h4>Browse Files</h4>
+                            <ul class="menuright">
+                                <li class="current"><a href="">All Files</a></li>
+                                <li><a href="">Deleted Files</a></li>
+                                <li><a href="">Recently Added</a></li>
+                                <li><a href="">Recently Viewed</a></li>
+                                <li><a href="">New Folder</a></li>
+                                <li><a href="">New Folder(2)</a></li>
+                            </ul>
+                        </div><!-- mediamgr_rightinner -->
+                    </div><!-- mediamgr_right -->
+                    <br class="clearall" />
+                </div><!--mediamgr-->
+
+
+            </div><!--contentinner-->
+        </div><!--maincontent-->
+        
+    </div><!--mainright-->
+    <!-- END OF RIGHT PANEL -->
+    
+    <div class="clearfix"></div>
+    <?php $this->adminFooterpanel($this);?>
+    
+
+    
+</div><!--mainwrapper-->
+<script type="text/javascript">
+    function iniControlListfile()
+    {
+        // List of Files: Click to Select 
+        jQuery('.listfile li').unbind('click').click(function(e){
+            if(!e.ctrlKey && !e.cmdKey){
+                jQuery('.listfile li.selected').removeClass('selected');  
+            }
+            if(!jQuery(this).hasClass('selected')) {
+                jQuery(this).addClass('selected');
+            } else {
+                jQuery(this).removeClass('selected');
+            }
+        });
+        
+        // Trash
+        jQuery('.trash').unbind('click').click(function(){
+            var count = 0;
+            var items = new Array();
+            jQuery('.listfile li').each(function(){
+                if(jQuery(this).hasClass('selected')) {
+                    items[count] = jQuery(this);
+                    count++;
+                }
+            });
+            if(items.length > 0) {
+                var msg = (items.length > 1)? 'files' : 'file';
+                if(confirm('Delete '+items.length+' '+msg+'?')) {
+                    for(var a=0;a<count;a++) {
+                        jQuery(items[a]).fadeOut(function(){
+                            jQuery(this).remove();
+                        }); 
+                    }
+                }
+            } else {
+                alert('No file selected');
+            }
+            return false;
+        });
+        
+        // Colorbox
+        jQuery(".listfile a").colorbox();
+
+    }
+
+    function loadListmedia(page)
+    {
+        jQuery.ajax({
+            url: "<?php echo $this->baseUrl('media/admin-media/get-list');?>",
+            data: {page:page},
+            async:true,
+            beforeSend: function () {
+                
+            },
+            success: function(jsonRespon) {
+
+                jQuery("#ajax-listfile").html(jsonRespon);
+                iniControlListfile(); 
+            }
+        });
+    }
+
+    function blockMediaItem(id,name,image,type)
+    {
+        
+
+        return [
+            '<li class="blockitem" fname="'+name+'">',
+            '    <div class="progress progress-striped active"><div style="width: 0%;" class="bar"></div></div>',
+            '    <a href="ajax/doc.html" data-rel="'+type+'" style="display:none;"><img src="#" alt="" /></a>',
+            '    <span class="filename">'+name+'</span>',
+            '</li> '].join("\r\n");
+        
+    }
+
+    jQuery(function() {
+        jQuery('#file_upload').uploadifive({
+            'buttonText'   : 'Tải lên',
+            'buttonClass' : 'btn btn-info',
+            
+            'auto'         : true,
+            'uploadScript' : '<?php echo $this->baseUrl("media/admin-media/upload/");?>',    
+            'onInit'   : function() {
+                //alert('The queue ID is ' + instance.settings.queueID);
+                var idUL=jQuery(this).attr('id');
+                jQuery('#uploadifive-'+idUL).removeClass('uploadifive-button').css({'cursor':'pointer','width':'auto','text-align': 'left','line-height': '20px', 'height': '20px'}).prepend('<span class="icon-upload"></span> ');
+
+            } ,   
+            'onAddQueueItem' : function(file) {
+                //alert('The file ' + file.name + ' was added to the queue!');
+                jQuery(".listfile").prepend(blockMediaItem('0',file.name,'','doc'));
+                
+            },                                     
+            'onSelect' : function(queue) {
+                //alert(queue.queued + ' files were added to the queue.');
+                
+            },
+            'onProgress'   : function(file, e) {
+                if (e.lengthComputable) {
+                    var percent = Math.round((e.loaded / e.total) * 100);
+                }
+                
+
+                jQuery(".listfile li[fname='"+file.name+"'] .progress .bar").css({'width':percent+'%'});
+                //file.queueItem.find('.fileinfo').html(' - ' + percent + '%');
+                //file.queueItem.find('.progress-bar').css('width', percent + '%');
+            },
+            'onError'      : function(errorType) {
+                jQuery(".listfile li[fname='"+file.name+"'] .progress").removeClass('progress-striped active').addClass('progress-danger');
+            }, 
+            'onUploadComplete' : function(file, data) {
+                var arrData=jQuery.parseJSON(data);
+                jQuery(".listfile li[fname='"+file.name+"'] .progress .bar").css({'width':'100%'});
+                setTimeout(function() {
+                            //xoa progress bar
+                            jQuery(".listfile li[fname='"+file.name+"'] .progress").remove();
+                            //hien hinh
+                            jQuery(".listfile li[fname='"+file.name+"'] a img").attr('src',arrData['image_url']);
+                            jQuery(".listfile li[fname='"+file.name+"'] a").show();
+                        }, 3000);
+                //jQuery.parseJSON();
+                iniControlListfile(); 
+            } 
+            // Put your options here
+        });
+    });
+
+    jQuery(document).ready(function(){
+        loadListmedia(<?php echo $this->arrParam['page']; ?>);
+    });
+
+
+    
+</script>

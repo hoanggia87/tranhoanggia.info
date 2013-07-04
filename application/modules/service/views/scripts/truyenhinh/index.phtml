@@ -1,0 +1,112 @@
+<?php
+	$listChanel = $this->listChanel;
+	$selectChanel='<label for="tinh"></label><select name="chanel" id="chanel" onChange="showTruyenhinh(this.value)">';
+    $strTruyenhinh = '';
+	foreach ($this->listChanel as $k => $v) 
+    {
+        if($k == 1)
+        {
+            $strSelected ='selected="selected"';
+            $stl = '';
+        }
+        else
+        {
+            $stl = 'style="display: none;"';
+            $strSelected ='';
+        }
+		$selectChanel.='<option '.$strSelected.' value="'.$k.'">'.$v.'</option>';
+        $strTruyenhinh .= '<div id="chanel-'.$k.'" '.$stl.'>'.$this->truyenhinh[$k].'</div>';	
+	}
+	$selectChanel.='</select>';
+    $currentDate = date('d-m-Y');
+    $idcurrent = str_replace('-','',$currentDate);
+    //$truyenhinh =$this->truyenhinh;
+?>
+<div id="category">
+    <div class="wrapper">
+        <div id="cat-content">
+            <div id="cat-left">
+                <div id="category-detail">
+                    <div id="chanel-box">
+                        <div class="nav_link">
+                            <h2><span style="float: left;margin-right: 5px;"><a href="<?php echo DOMAIN_NAME; ?>" title="">TRANG CHỦ</a></span> <span style="float: left;margin-right: 6px; margin-top:1px"><img src="<?php echo DOMAIN_NAME;?>public/templates/public/online/images/breadcrumb-right.png" /></span> <span style="float: left;">Truyền hình</span></h2>
+                        </div>
+                        <div class="category-detail">
+                            <div class="clr">
+                                <div class="truyenhinh-title" style="float: left;">
+                                    <div style="float: left; padding-right:10px;"><strong>Chọn kênh:</strong> <?php echo $selectChanel;?></div>
+                                    
+                                </div>
+                                <div style="float: right; padding-left:4px;"><strong> Nguồn: </strong> <a href="http://vtv.vn/TVSchedule/132.vtv" target="_blank">Truyền hình Việt Nam</a></div>
+                            </div>
+                            <div class="clr"></div>
+                            <div id="chanel-content">
+                                <?php echo $strTruyenhinh;?>
+                            </div>
+                            <script type="text/javascript">
+                                var _idListCur = '#t<?php echo $idcurrent;?>';
+                                var _idDayCur  = '#d<?php echo $idcurrent;?>';
+                                var _idChanelCur = "#chanel-1";
+                                function showTruyenhinh(chanel)
+                                {
+                                    $(_idChanelCur).hide();
+                                    _idChanelCur = '#chanel-' + chanel;
+                                    $(_idChanelCur).show();
+                                    //alert($(chanelID + ' ' + _idDayCur).parent().parent().html());
+                                    $(_idChanelCur + ' ' + _idDayCur).parent().parent().addClass('current');
+                                    $(_idChanelCur + ' ' + _idListCur).fadeIn(500);
+                                    $(_idChanelCur + ' .nav li').click(function()
+                                    {
+                                        //alert($(chanelID + ' ' + _idDayCur).parent().parent().html());
+                                       //$(chanelID + ' ' + _idDayCur).parent().parent().removeClass('current');
+                                       //$(chanelID + ' ' + _idListCur).hide();
+                                       //alert($(_idDayCur).val());
+                                       //id =  $(this).children().children().attr('rel');
+                                       //_idListCur = '#t' + id;
+                                       //_idDayCur = '#d' + id;
+                                       //$(_idListCur).fadeIn(500);
+                                       //$(_idDayCur).parent().parent().addClass('current');
+                                       return false;
+                                    });
+                                }
+                                $(document).ready(function() 
+                                {
+                                    //$('.list-container').children().css('display','none');
+                                    //alert($('#chanel-content table tr td:eq(2)').html());
+                                    //alert($(_idChanelCur + ' ' + _idListCur).html());
+                                    $(_idChanelCur + ' ' + _idListCur).show();
+                                    $(_idChanelCur + ' ' + _idDayCur).parent().parent().addClass('current');
+                                    $('.nav li').click(function()
+                                    {
+                                        //alert(_idChanelCur);
+                                       $(_idChanelCur + ' ' + _idDayCur).parent().parent().removeClass('current');
+                                       $(_idChanelCur + ' ' + _idListCur).hide();
+                                       //alert($(_idDayCur).val());
+                                       id =  $(this).children().children().attr('rel');
+                                       _idListCur = '#t' + id;
+                                       _idDayCur = '#d' + id;
+                                       $(_idChanelCur + ' ' + _idListCur).fadeIn(500);
+                                       $(_idChanelCur + ' ' + _idDayCur).parent().parent().addClass('current');
+                                       return false;
+                                    });
+                                    $('#chanel-content table').attr('cellpadding','0');
+                                    $('#chanel-content table').attr('cellspacing','0');
+                                    $('#chanel-content table').attr('border','0');
+                                    $('#chanel-content table').addClass('ta1');
+                                    $('#chanel-content table th').addClass('pt_title');
+                                    $('#chanel-content table tr:even').addClass('pt_mau2');
+                                    
+                                });
+                            </script>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="cat-right">
+                <?php $this->ShowMenuRight($this);?>
+                <?php $this->ShowTinPhim($this);?>
+                <?php $this->ShowCopyRight($this);?>
+            </div>
+        </div>
+    </div>
+</div>

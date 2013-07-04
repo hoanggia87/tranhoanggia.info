@@ -1,0 +1,357 @@
+
+
+<style>
+.adminlist .content {
+float: left;
+margin-right: 20px;
+width: 460px;
+overflow: hidden;}
+
+.adminlist .info-post {float: right;
+width: 240px;}
+.videoPlay {
+    
+   margin-bottom: -64px;
+    position: relative;
+    top: -220px;
+
+}
+.img-wrap{
+    position:relative;
+    text-align: center;
+}
+.jump_focus_input{
+    width: 100%;
+    font-size: 20px;
+    font-weight: bold;
+}
+.applypost:visited {color: white;}
+.disabled{opacity: 0.2;}
+</style>
+<div id="fb-root"></div>
+<form name="appForm" method="post" action="">
+
+
+
+    <?php echo $this->render('admin-article/toolbar/index.php')?>
+    <div class="clr"></div>
+     <?php echo $this->render('admin-article/sublink/index.php')?>
+
+    <!-- BEGIN: CONTENT -->
+    <div id="element-box">
+        <div class="t">
+            <div class="t">
+                <div class="t"></div>
+            </div>
+        </div>
+        <div class="m">
+        	<div class="width-60 fltlft">
+            	
+            
+                <!-- BEGIN: ELEMENT BOX -->
+				<div id="filters">
+					
+                    Website
+                    <select id="website">
+                    <?php
+                    foreach ($this->listWebs as $key => $value) {
+                        ?>
+                        <option value="<?php echo $value['id'];?>" ppname="<?php echo $value['ppname'];?>" ><?php echo $value['name'];?></option>
+                        <?php
+                    }
+                    ?>
+                    </select>
+                    <span id="select-website-category">
+
+                    </span>
+					<div class="clr"></div>
+				</div>	
+
+                <div id="ajax-content"></div>
+                
+            </div>    
+            <!-- END: ELEMENT BOX -->	
+          <div class="clr"></div>
+        </div>
+        <div class="b">
+            <div class="b">
+                <div class="b"></div>
+            </div>
+        </div>
+    </div>
+    <!-- END: 	CONTENT -->
+</form>
+<script>
+function formatInputText(txtAnwser)
+{
+    txtAnwser=txtAnwser.replace(/</g,"&lt;");
+    txtAnwser=txtAnwser.replace(/>/g,"&gt;");
+    txtAnwser=txtAnwser.replace(/\'/g,"&#39;");
+    txtAnwser=txtAnwser.replace(/"/g,"&quot;");
+    return txtAnwser;
+}
+var _tempText='';
+function iniControl()
+{
+    $(".jump_focus").unbind("click").click(function(event){
+        event.preventDefault();
+
+        var inpuText=$(this).text();
+        _tempText=inpuText;
+        var objParent=$(this).parent();
+        $(this).replaceWith('<input type="text" value="'+inpuText+'" class="jump_focus_input">');
+        $(objParent).find(".jump_focus_input").focus(function() {
+           $(this).select();
+        }).focus();
+        iniControl();
+    });
+    $(".jump_focus_input").unbind("keypress").unbind("focusout").focusout(function(event){
+        event.preventDefault();
+
+        var inpuText=formatInputText($.trim($(this).val()));
+        
+        if(inpuText=='')
+        {
+            inpuText=_tempText;
+        }
+
+        $(this).replaceWith('<a href="#" class="jump_focus">'+formatInputText($.trim(inpuText))+'</a>');
+        iniControl();
+    }).keypress(function(event){
+              
+        if(event.which==13)
+        {
+            var inpuText=formatInputText($.trim($(this).val()));
+            
+            if(inpuText=='')
+            {
+                inpuText=_tempText;
+            }
+
+            $(this).replaceWith('<a href="#" class="jump_focus">'+formatInputText($.trim(inpuText))+'</a>');
+            iniControl();
+            $(this).unbind("keypress");
+        }
+    });
+
+    $(".applypost").unbind("click").click(function(event){
+        event.preventDefault();
+        var temp=$(this).parents(".info-post").find(".ishot:checked" ).length;
+        var ishot=(temp===1)?1:0;
+
+        var temp=$(this).parents(".info-post").find(".is18:checked" ).length;
+        var isAdult=(temp===1)?1:0;
+
+        var isWatemark='';
+        if($(this).attr('type')=='image')
+            isWatemark=$(this).parents(".info-post").find(".watemark:checked").val();
+        
+
+
+        saveDetail($(this),$(this).attr('href'),$(this).attr('type'),
+                $(this).parents(".info-post").find("a.jump_focus").html(),
+                isAdult,ishot,isWatemark
+            );
+    });
+    $(".applypost.disabled").unbind("click").click(function(event){
+        event.preventDefault();
+        
+    });
+    
+
+}
+function getList(page)
+{
+    var ppname=$("#website option:selected").attr("ppname");
+    var cat_id=$("#website_category").val();
+    
+    $.ajax({
+        url: '<?php echo $this->baseUrl("article/admin-article/get-list/ppname/");?>'+ppname+'/cat_id/'+cat_id+'/page/'+page,
+        //data: { act:'get-exam-info'},
+        async:true,
+        beforeSend: function () {
+            
+        },
+        success: function(jsonRespon) {
+            if(jsonRespon)
+            {                
+                $("#ajax-content").html(jsonRespon);
+               
+                
+                initScroll();
+                iniControl();
+            }    
+            else
+                $("#ajax-content").html("Không lấy được dữ liệu");
+
+
+        }
+    });
+
+
+}
+
+function saveDetail(objThis,link,type,title,isAdult,isHot,isEditWM)
+{
+    var ppname=$("#website option:selected").attr("ppname");
+    var page_id=$("#website").val();
+    $(objThis).hide().after('<img src="<?php echo $this->imgUrl;?>/loading_fb.gif">');
+    $.ajax({
+        url: '<?php echo $this->baseUrl("article/admin-article/save-detail");?>',
+        data: { ppname:ppname,
+                link:urlencode(link),
+                type:type,title:title,
+                page_id:page_id,
+                isadult:isAdult,
+                ishot:isHot,
+                iseditwm:isEditWM},
+        async:true,
+        beforeSend: function () {
+            
+        },
+        success: function(jsonRespon) {
+            
+            var arrvalue=$.parseJSON(jsonRespon);
+            //console.log(arrvalue);
+            if(arrvalue['status']==1)//insert thành cong
+            {                
+                //$(objThis).
+                $(objThis).unbind("click").addClass("disabled").show();
+               postFacebook(arrvalue['id'],arrvalue['title'],arrvalue['image'],arrvalue['type'],arrvalue['link']);
+                
+                
+            }    
+            else
+            {
+
+                $(objThis).show();
+            }
+                
+            $(objThis).next().remove();
+
+
+        }
+    });
+}
+
+
+function getWebsiteCategory()
+{
+    var webID=$("#website").val();
+    
+    $.ajax({
+        url: '<?php echo $this->baseUrl("article/admin-article/get-list-website-category/web_id/");?>'+webID,
+        //data: { act:'get-exam-info'},
+        async:false,
+        beforeSend: function () {
+            
+        },
+        success: function(jsonRespon) {
+            $("#select-website-category").html(jsonRespon);
+            $("#website_category").unbind('change');
+            $("#website_category").change(function(){
+                
+                getList(1);
+            });
+            getList(1);
+        }
+    });
+}
+function postFacebook(id,title,image,type,link)
+{
+    window.fbAsyncInit = function () {
+
+        FB.init({
+            appId: '513864142013652', // App ID
+            channelUrl: '', // Channel File
+            status: true, // check login status
+            cookie: true, // enable cookies to allow the server to access the session
+            xfbml: true  // parse XFBML
+        });
+        FB.api('161793493989786/feed', 'post',{ 
+            access_token:'<?php echo $this->access_token;?>',
+            name: title,
+            caption:'shockvl.com',
+            picture:image,
+            description:'Còn rất nhiều bài Shock từ shockvl.com :v  - Shockvl - shock mà vui',
+            link: link
+
+
+        }, function(response) {
+            
+            
+        });
+    };
+    // Load the SDK Asynchronously
+    (function (d) {
+        var js, id = 'facebook-jssdk', ref = d.getElementsByTagName('script')[0];
+        if (d.getElementById(id)) { return; }
+        js = d.createElement('script'); js.id = id; js.async = true;
+        js.src = "http://connect.facebook.net/en_US/all.js";
+        ref.parentNode.insertBefore(js, ref);
+    }(document));
+
+    return;
+    $.ajax({
+        url: '<?php echo $this->baseUrl("article/admin-article/index");?>',
+        data: { act:'post',
+                id:id,
+                code:"<?php echo $this->arrParam['code'];?>",
+                image:urlencode(image),
+                title:urlencode(title),
+                type:type},
+        async:true,
+        beforeSend: function () {
+            
+        },
+        success: function(jsonRespon) {
+            
+        }
+    });
+}
+function initScroll()
+{
+
+    $(window).unbind("scroll").scroll(function () {
+        var objWindow=this;
+        $(".post-info").each(function(){
+            var pos=$(this).parents("td").position();
+           
+            var height=$(this).parents("td").height();
+            var heightinfo=$(this).height();
+            //console.log("scrollTop: "+$(objWindow).scrollTop()+" | pos: "+pos.top);
+            if($(objWindow).scrollTop()>pos.top && $(objWindow).scrollTop()<(pos.top+height-heightinfo))
+            {
+                //alert("here");
+                var ps=($(objWindow).scrollTop()-pos.top);
+                
+                $(this).css({'margin-top':ps+'px'});
+            }
+            else
+            {
+                $(this).css({'margin-top':'0px'});
+            }
+            //console.log(pos.top);
+        });
+        
+        
+        
+        //console.log($(this).scrollTop());
+    });
+}
+
+
+
+
+$(document).ready(function(){
+    //getWebsiteCategory();
+    //getList();
+    $("#website").change(function(){
+        getWebsiteCategory();
+    }).change();
+    /*$("#website_category").change(function(){
+        getList();
+    });*/
+
+});
+</script>
